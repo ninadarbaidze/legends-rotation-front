@@ -18,6 +18,15 @@ module.exports = {
       },
       fontFamily: {
         teko: ['Teko'],
+        ubuntu: ['Ubuntu'],
+      },
+      colors: {
+        'grey-250': '#E5E7EB',
+        'grey-300': '#D1D5DB',
+        'grey-350': '#6B7280',
+        'grey-700': '#374151',
+        'grey-900': '#111827',
+        red: '#CF0A0A',
       },
     },
   },

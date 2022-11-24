@@ -10,7 +10,7 @@ export default function Home() {
       </Head>
       <div className='h-screen w-screen overflow-clip bg-main_bg bg-cover bg-center font-Teko font-teko'>
         <div className='flex justify-center items-center bg-black w-screen h-screen absolute top-0 left-0 bg-opacity-50 z-10'>
-          <button className='px-12 py-2 bg-black hover:bg-[#CF0A0A] transition-all duration-300 rounded-md text-white text-4xl'>
+          <button className='px-12 py-2 bg-black hover:bg-red transition-all duration-300 rounded-md text-white text-4xl'>
             Create rotation
           </button>
         </div>
