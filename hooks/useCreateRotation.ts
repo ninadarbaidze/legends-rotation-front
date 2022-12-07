@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export const useCreateRotation = () => {
@@ -13,5 +14,9 @@ export const useCreateRotation = () => {
     unregister,
     getValues,
   } = useForm();
-  return {};
+  const options = ['beach', 'stable', 'farm'];
+
+  const [initialClassState, setInitialClassState] = useState([]);
+
+  return { options, setValue, getValues, setInitialClassState };
 };

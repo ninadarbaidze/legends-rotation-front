@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useClassSelectInput = () => {
+export const useClassSelectInput = (setValue: any, initialState) => {
   const [selectedClasses, setSelectedClasses] = useState<any[]>([]);
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
@@ -9,9 +9,7 @@ export const useClassSelectInput = () => {
     title: string;
     icon: string;
   }) => {
-    // const colors = ['red', 'blue', 'green', 'black'];
     setSelectMenuIsVisible(false);
-    // setSelectedOption(selectedOption);
     if (selectedClasses.length < 4) {
       setSelectedClasses((prevState) => [
         ...prevState,
@@ -28,6 +26,7 @@ export const useClassSelectInput = () => {
       });
     }
   };
+  initialState && setValue('initialState', selectedClasses);
 
   const options = [
     { title: 'Hunter', icon: '/images/hunter.png' },

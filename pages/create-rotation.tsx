@@ -1,11 +1,13 @@
 import { ClassSelectInput, CustomSelectInput } from 'components';
 import { SelectInput } from 'components';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useCreateRotation } from 'hooks';
 
-export default function Home() {
-  const options = ['beach', 'stable', 'farm'];
+export default function CreateRotation() {
+  const { options, setValue, getValues, setInitialClassState } =
+    useCreateRotation();
 
   return (
     <>
@@ -31,7 +33,12 @@ export default function Home() {
               height={100}
             />
           </div> */}
-          <ClassSelectInput />
+          <ClassSelectInput
+            setValue={setValue}
+            getValues={getValues}
+            setInitialClassState={setInitialClassState}
+            initialState={true}
+          />
         </div>
       </div>
     </>

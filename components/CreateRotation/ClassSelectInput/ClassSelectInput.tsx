@@ -13,7 +13,9 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
     options,
     selectedClasses,
     deleteClassHandler,
-  } = useClassSelectInput();
+  } = useClassSelectInput(props.setValue, props.initialState);
+
+  console.log(props.getValues());
 
   return (
     <>
