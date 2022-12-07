@@ -13,7 +13,7 @@ export const useCreateRotation = () => {
     reset,
     unregister,
     getValues,
-  } = useForm();
+  } = useForm({ defaultValues: { initialState: [] } });
   const options = ['beach', 'stable', 'farm'];
 
   const [initialClassState, setInitialClassState] = useState([]);

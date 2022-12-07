@@ -11,11 +11,23 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
     setSelectMenuIsVisible,
     selectOptionHandler,
     options,
-    selectedClasses,
     deleteClassHandler,
-  } = useClassSelectInput(props.setValue, props.initialState);
+    classes,
+  } = useClassSelectInput(
+    props.setValue,
+    props.initialState,
+    props.getValues,
+    props.selectedClasses,
+    props.setSelectedClasses
+  );
 
-  console.log(props.getValues());
+  console.log('selectedClasses', props.selectedClasses);
+  console.log('getValues', props.getValues('initialState'));
+
+  // console.log(
+  //   classes.length > 0 &&
+  //     classes.find((element) => item.id === element.id).length > 0
+  // );
 
   return (
     <>
@@ -27,38 +39,68 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
       )}
       <div className='w-96 flex flex-col justify-start items-start '>
         <ul className='flex gap-2 mb-2'>
-          {selectedClasses.map((classes) => (
-            <>
-              <li
-                className={`${
-                  classes.color === 'red'
-                    ? 'bg-red2'
-                    : classes.color === 'blue'
-                    ? 'bg-blue'
-                    : classes.color === 'green'
-                    ? 'bg-green'
-                    : 'bg-black'
-                } relative w-8 h-8 rounded-full`}
-                key={classes.id}
-                onClick={() => deleteClassHandler(classes.id)}
-              >
-                <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
-                  <p className='text-[7px]'> x </p>
-                </div>
-                <div className='p-[6px]'>
-                  <Image
-                    src={`${classes.image}`}
-                    alt='class'
-                    width={25}
-                    height={25}
-                  />
-                </div>
-              </li>
-            </>
-          ))}
+          {props.initialState
+            ? props.selectedClasses.map((classes) => (
+                <>
+                  <li
+                    className={`${
+                      classes.color === 'red'
+                        ? 'bg-red2'
+                        : classes.color === 'blue'
+                        ? 'bg-blue'
+                        : classes.color === 'green'
+                        ? 'bg-green'
+                        : 'bg-black'
+                    } relative w-8 h-8 rounded-full`}
+                    key={classes.id}
+                    onClick={() => deleteClassHandler(classes.id)}
+                  >
+                    <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
+                      <p className='text-[7px]'> x </p>
+                    </div>
+                    <div className='p-[6px]'>
+                      <Image
+                        src={`${classes.image}`}
+                        alt='class'
+                        width={25}
+                        height={25}
+                      />
+                    </div>
+                  </li>
+                </>
+              ))
+            : classes.map((classes) => (
+                <>
+                  <li
+                    className={`${
+                      classes.color === 'red'
+                        ? 'bg-red2'
+                        : classes.color === 'blue'
+                        ? 'bg-blue'
+                        : classes.color === 'green'
+                        ? 'bg-green'
+                        : 'bg-black'
+                    } relative w-8 h-8 rounded-full`}
+                    key={classes.id}
+                    onClick={() => deleteClassHandler(classes.id)}
+                  >
+                    <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
+                      <p className='text-[7px]'> x </p>
+                    </div>
+                    <div className='p-[6px]'>
+                      <Image
+                        src={`${classes.image}`}
+                        alt='class'
+                        width={25}
+                        height={25}
+                      />
+                    </div>
+                  </li>
+                </>
+              ))}
         </ul>
 
-        {selectedClasses.length < 4 && (
+        {true && (
           <div className='font-ubuntu'>
             <div
               className={`${props.inputClass} ${
@@ -76,15 +118,34 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
               <ul
                 className={`${props.inputClass} overflow-y-auto relative  w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight z-30`}
               >
-                {options.map((option) => (
-                  <li
-                    key={option.title}
-                    className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
-                    onClick={() => selectOptionHandler(option)}
-                  >
-                    <p>{option.title}</p>
-                  </li>
-                ))}
+                {props.initialState
+                  ? options.map((option) => (
+                      <li
+                        key={option.title}
+                        className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
+                        onClick={() => selectOptionHandler(option)}
+                      >
+                        <p>{option.title}</p>
+                      </li>
+                    ))
+                  : props
+                      .getValues('initialState')
+                      .filter((item) =>
+                        classes.length > 0
+                          ? classes.find((element) => item.id === element.id)
+                            ? false
+                            : true
+                          : item
+                      )
+                      .map((option) => (
+                        <li
+                          key={option.title}
+                          className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
+                          onClick={() => selectOptionHandler(option)}
+                        >
+                          <p>{option.title}</p>
+                        </li>
+                      ))}
               </ul>
             )}
           </div>

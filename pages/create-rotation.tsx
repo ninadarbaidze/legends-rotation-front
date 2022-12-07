@@ -8,6 +8,9 @@ import { useCreateRotation } from 'hooks';
 export default function CreateRotation() {
   const { options, setValue, getValues, setInitialClassState } =
     useCreateRotation();
+  const [selectedClasses, setSelectedClasses] = useState<any[]>(
+    getValues('initialState')
+  );
 
   return (
     <>
@@ -38,6 +41,16 @@ export default function CreateRotation() {
             getValues={getValues}
             setInitialClassState={setInitialClassState}
             initialState={true}
+            selectedClasses={selectedClasses}
+            setSelectedClasses={setSelectedClasses}
+          />
+          <ClassSelectInput
+            setValue={setValue}
+            getValues={getValues}
+            setInitialClassState={setInitialClassState}
+            initialState={false}
+            selectedClasses={selectedClasses}
+            setSelectedClasses={setSelectedClasses}
           />
         </div>
       </div>

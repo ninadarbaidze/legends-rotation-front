@@ -1,32 +1,53 @@
 import { useState } from 'react';
 
-export const useClassSelectInput = (setValue: any, initialState) => {
-  const [selectedClasses, setSelectedClasses] = useState<any[]>([]);
+export const useClassSelectInput = (
+  setValue: any,
+  initialState: boolean,
+  getValues: any,
+  selectedClasses: any,
+  setSelectedClasses: any
+) => {
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
+  const [classes, setClasses] = useState([]);
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
+
+  initialState && setValue('initialState', selectedClasses);
+  !initialState && setValue('selectedClasses', classes);
 
   const selectOptionHandler = (selectedOption: {
     title: string;
     icon: string;
   }) => {
-    setSelectMenuIsVisible(false);
-    if (selectedClasses.length < 4) {
-      setSelectedClasses((prevState) => [
+    if (initialState) {
+      setSelectMenuIsVisible(false);
+      if (selectedClasses.length < 4) {
+        setSelectedClasses((prevState) => [
+          ...prevState,
+          {
+            id:
+              prevState.length === 0
+                ? 1
+                : prevState[prevState.length - 1].id + 1,
+            title: selectedOption.title,
+            image: selectedOption.icon,
+            color: colors[0],
+          },
+        ]);
+        setColors((prevState) => {
+          return prevState.slice(1);
+        });
+      }
+    } else {
+      setClasses((prevState) => [
         ...prevState,
         {
-          id:
-            prevState.length === 0 ? 1 : prevState[prevState.length - 1].id + 1,
-          title: selectedOption.title,
-          image: selectedOption.icon,
-          color: colors[0],
+          ...selectedOption,
         },
       ]);
-      setColors((prevState) => {
-        return prevState.slice(1);
-      });
     }
   };
-  initialState && setValue('initialState', selectedClasses);
+
+  console.log('class', classes);
 
   const options = [
     { title: 'Hunter', icon: '/images/hunter.png' },
@@ -49,8 +70,6 @@ export const useClassSelectInput = (setValue: any, initialState) => {
     });
   };
 
-  console.log(selectedClasses);
-
   return {
     selectMenuIsVisible,
     setSelectMenuIsVisible,
@@ -58,5 +77,6 @@ export const useClassSelectInput = (setValue: any, initialState) => {
     selectOptionHandler,
     selectedClasses,
     deleteClassHandler,
+    classes,
   };
 };
