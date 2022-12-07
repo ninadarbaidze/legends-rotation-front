@@ -1,11 +1,11 @@
-import { CustomSelectInput } from 'components';
+import { ClassSelectInput, CustomSelectInput } from 'components';
+import { SelectInput } from 'components';
 import Head from 'next/head';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Home() {
-  const options = ['nina', 'nasi', 'dodo', 'rarirao'];
-  const [selectedOption, setSelectedOption] = useState('');
-  console.log(selectedOption);
+  const options = ['beach', 'stable', 'farm'];
 
   return (
     <>
@@ -18,11 +18,21 @@ export default function Home() {
         <h1 className='flex items-center justify-center font-teko text-4xl mt-12'>
           Create rotation
         </h1>
-        <CustomSelectInput
-          options={options}
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-        />
+        <div className='flex flex-col gap-12 ml-48'>
+          <div>
+            {/* <CustomSelectInput options={options} />
+            <SelectInput /> */}
+          </div>
+          {/* <div>
+            <Image
+              src={'/images/hunter.png'}
+              alt='class'
+              width={100}
+              height={100}
+            />
+          </div> */}
+          <ClassSelectInput />
+        </div>
       </div>
     </>
   );

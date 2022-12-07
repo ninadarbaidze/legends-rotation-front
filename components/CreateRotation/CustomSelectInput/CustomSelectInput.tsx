@@ -1,10 +1,13 @@
 import { ChevronDownIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { useCustomSelectInput } from './useCustomSelectInput';
 import { PropsTypes } from './types';
+import { useState } from 'react';
 
 const CustomSelectInput: React.FC<PropsTypes> = (props) => {
+  const [selectedOption, setSelectedOption] = useState('');
   const { selectMenuIsVisible, setSelectMenuIsVisible, selectOptionHandler } =
-    useCustomSelectInput(props.setSelectedOption);
+    useCustomSelectInput(setSelectedOption);
+
   return (
     <>
       {selectMenuIsVisible && (
@@ -17,13 +20,13 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
       <div className='font-ubuntu ml-24'>
         <div
           className={`${props.inputClass} ${
-            props.selectedOption ? 'text-grey-700' : 'text-grey-350'
+            selectedOption ? 'text-grey-700' : 'text-grey-350'
           } relative w-56 pr-32 py-2 rounded-md border border-grey-300  font-extralight`}
           onClick={() => setSelectMenuIsVisible(!selectMenuIsVisible)}
         >
           <p className='pl-2'>{`${
-            props.selectedOption
-              ? props.selectedOption
+            selectedOption
+              ? selectedOption
               : `Select ${props.placeholder ? props.placeholder : ''}`
           }`}</p>
           <div className=''>
@@ -41,9 +44,7 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
                 onClick={() => selectOptionHandler(option)}
               >
                 <p>{option}</p>
-                {props.selectedOption === option && (
-                  <CheckIcon className='w-4' />
-                )}
+                {selectedOption === option && <CheckIcon className='w-4' />}
               </li>
             ))}
           </ul>
