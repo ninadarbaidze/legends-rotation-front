@@ -4,7 +4,7 @@ import { useCreateRotation } from 'hooks';
 import { FormProvider } from 'react-hook-form';
 
 export default function CreateRotation() {
-  const { selectedClasses, setSelectedClasses, form } = useCreateRotation();
+  const { initialStates, setInitialStates, form } = useCreateRotation();
 
   return (
     <>
@@ -21,13 +21,13 @@ export default function CreateRotation() {
           <form className='flex flex-col gap-12 ml-48'>
             <ClassSelectInput
               initialState={true}
-              selectedClasses={selectedClasses}
-              setSelectedClasses={setSelectedClasses}
+              initialStates={initialStates}
+              setInitialStates={setInitialStates}
             />
             <ClassSelectInput
               initialState={false}
-              selectedClasses={selectedClasses}
-              setSelectedClasses={setSelectedClasses}
+              initialStates={initialStates}
+              setInitialStates={setInitialStates}
             />
           </form>
         </FormProvider>

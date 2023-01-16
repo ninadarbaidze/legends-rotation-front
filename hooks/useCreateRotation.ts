@@ -4,21 +4,16 @@ import { ClassInitialState, FormClasses } from 'types/global';
 
 export const useCreateRotation = () => {
   const form = useForm<FormClasses>({
-    defaultValues: { initialState: [], selectedClasses: [] },
+    defaultValues: { initialState: [], selectedOptions: [] },
   });
-  const { getValues } = form;
   const options = ['beach', 'stable', 'farm'];
 
-  const [selectedClasses, setSelectedClasses] = useState<ClassInitialState[]>(
-    getValues('initialState')
-  );
+  const [initialStates, setInitialStates] = useState<ClassInitialState[]>([]);
 
-  console.log(selectedClasses);
   return {
     options,
-    selectedClasses,
-    setSelectedClasses,
-
+    initialStates,
+    setInitialStates,
     form,
   };
 };

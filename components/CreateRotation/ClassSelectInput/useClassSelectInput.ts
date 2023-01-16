@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ClassInitialState, SetState } from 'types/global';
 
@@ -11,8 +11,12 @@ export const useClassSelectInput = (
   const [classes, setClasses] = useState<ClassInitialState[]>([]);
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
   const { setValue, getValues } = useFormContext();
-  initialState && setValue('initialState', selectedClasses);
-  !initialState && setValue('selectedClasses', classes);
+  // console.log(classes);
+  console.log(getValues());
+  useEffect(() => {
+    initialState && setValue('initialState', selectedClasses);
+    !initialState && setValue('selectedOptions', classes);
+  }, [classes, initialState, selectedClasses, setValue]);
 
   const selectOptionHandler = (selectedOption: {
     title: string;
@@ -57,17 +61,34 @@ export const useClassSelectInput = (
   ];
 
   const deleteClassHandler = (classId: number) => {
-    setSelectedClasses((prevState: ClassInitialState[]) => {
-      return prevState.filter((item) => item.id !== classId);
-    });
+    if (initialState) {
+      setSelectedClasses((prevState: ClassInitialState[]) => {
+        return prevState.filter((item) => item.id !== classId);
+      });
+      setClasses((prevState: ClassInitialState[]) => {
+        return prevState.filter((item) => item.id !== classId);
+      });
 
-    setColors((prevState) => {
-      const deleteColor = selectedClasses.filter(
-        (item) => item.id === classId
-      )[0].color;
-      prevState.unshift(deleteColor);
-      return prevState;
-    });
+      setColors((prevState) => {
+        const deleteColor = selectedClasses.filter(
+          (item) => item.id === classId
+        )[0].color;
+        prevState.unshift(deleteColor);
+        return prevState;
+      });
+    } else {
+      setClasses((prevState: ClassInitialState[]) => {
+        return prevState.filter((item) => item.id !== classId);
+      });
+
+      setColors((prevState) => {
+        const deleteColor = selectedClasses.filter(
+          (item) => item.id === classId
+        )[0].color;
+        prevState.unshift(deleteColor);
+        return prevState;
+      });
+    }
   };
 
   return {

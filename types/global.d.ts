@@ -9,5 +9,5 @@ export type ClassInitialState = {
 
 export type FormClasses = {
   initialState: ClassInitialState[];
-  selectedClasses: ClassInitialState[];
+  selectedOptions: ClassInitialState[];
 };

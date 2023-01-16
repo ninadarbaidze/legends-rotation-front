@@ -15,9 +15,10 @@ const ClassSelectInput: React.FC<Props> = (props) => {
     getValues,
   } = useClassSelectInput(
     props.initialState,
-    props.selectedClasses,
-    props.setSelectedClasses
+    props.initialStates,
+    props.setInitialStates
   );
+  console.log(getValues());
 
   return (
     <>
@@ -30,7 +31,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
       <div className='w-96 flex flex-col justify-start items-start '>
         <ul className='flex gap-2 mb-2'>
           {props.initialState
-            ? props.selectedClasses.map((classes: ClassInitialState) => (
+            ? props.initialStates.map((classes: ClassInitialState) => (
                 <>
                   <li
                     className={`${
@@ -106,7 +107,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
 
             {selectMenuIsVisible && (
               <ul
-                className={`${props.inputClass} overflow-y-auto relative  w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight z-30`}
+                className={`${props.inputClass} overflow-y-auto fixed z-30 bg-white w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight`}
               >
                 {props.initialState
                   ? options.map((option) => (
