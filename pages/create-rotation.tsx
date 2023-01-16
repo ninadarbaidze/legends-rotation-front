@@ -1,16 +1,17 @@
-import { ClassSelectInput, CustomSelectInput } from 'components';
-import { SelectInput } from 'components';
+import { ClassSelectInput } from 'components';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useCreateRotation } from 'hooks';
+import { FormProvider } from 'react-hook-form';
 
 export default function CreateRotation() {
-  const { options, setValue, getValues, setInitialClassState } =
-    useCreateRotation();
-  const [selectedClasses, setSelectedClasses] = useState<any[]>(
-    getValues('initialState')
-  );
+  const {
+    // options,
+    selectedClasses,
+    setSelectedClasses,
+    // initialClassState,
+    setInitialClassState,
+    form,
+  } = useCreateRotation();
 
   return (
     <>
@@ -23,36 +24,22 @@ export default function CreateRotation() {
         <h1 className='flex items-center justify-center font-teko text-4xl mt-12'>
           Create rotation
         </h1>
-        <div className='flex flex-col gap-12 ml-48'>
-          <div>
-            {/* <CustomSelectInput options={options} />
-            <SelectInput /> */}
-          </div>
-          {/* <div>
-            <Image
-              src={'/images/hunter.png'}
-              alt='class'
-              width={100}
-              height={100}
+        <FormProvider {...form}>
+          <form className='flex flex-col gap-12 ml-48'>
+            <ClassSelectInput
+              setInitialClassState={setInitialClassState}
+              initialState={true}
+              selectedClasses={selectedClasses}
+              setSelectedClasses={setSelectedClasses}
             />
-          </div> */}
-          <ClassSelectInput
-            setValue={setValue}
-            getValues={getValues}
-            setInitialClassState={setInitialClassState}
-            initialState={true}
-            selectedClasses={selectedClasses}
-            setSelectedClasses={setSelectedClasses}
-          />
-          <ClassSelectInput
-            setValue={setValue}
-            getValues={getValues}
-            setInitialClassState={setInitialClassState}
-            initialState={false}
-            selectedClasses={selectedClasses}
-            setSelectedClasses={setSelectedClasses}
-          />
-        </div>
+            <ClassSelectInput
+              setInitialClassState={setInitialClassState}
+              initialState={false}
+              selectedClasses={selectedClasses}
+              setSelectedClasses={setSelectedClasses}
+            />
+          </form>
+        </FormProvider>
       </div>
     </>
   );

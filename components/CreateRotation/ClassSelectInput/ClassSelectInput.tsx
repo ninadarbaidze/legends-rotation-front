@@ -1,11 +1,10 @@
-import { ChevronDownIcon, CheckIcon } from '@heroicons/react/24/solid';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { useClassSelectInput } from './useClassSelectInput';
-import { PropsTypes } from './types';
-import { useState } from 'react';
+import { Props } from './types';
 import Image from 'next/image';
+import { ClassInitialState } from 'types/global';
 
-const ClassSelectInput: React.FC<PropsTypes> = (props) => {
-  //   const [selectedOption, setSelectedOption] = useState('');
+const ClassSelectInput: React.FC<Props> = (props) => {
   const {
     selectMenuIsVisible,
     setSelectMenuIsVisible,
@@ -13,21 +12,13 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
     options,
     deleteClassHandler,
     classes,
+    getValues,
   } = useClassSelectInput(
-    props.setValue,
     props.initialState,
-    props.getValues,
     props.selectedClasses,
     props.setSelectedClasses
   );
-
-  console.log('selectedClasses', props.selectedClasses);
-  console.log('getValues', props.getValues('initialState'));
-
-  // console.log(
-  //   classes.length > 0 &&
-  //     classes.find((element) => item.id === element.id).length > 0
-  // );
+  // console.log(getValues());
 
   return (
     <>
@@ -40,7 +31,7 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
       <div className='w-96 flex flex-col justify-start items-start '>
         <ul className='flex gap-2 mb-2'>
           {props.initialState
-            ? props.selectedClasses.map((classes) => (
+            ? props.selectedClasses.map((classes: ClassInitialState) => (
                 <>
                   <li
                     className={`${
@@ -53,7 +44,7 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
                         : 'bg-black'
                     } relative w-8 h-8 rounded-full`}
                     key={classes.id}
-                    onClick={() => deleteClassHandler(classes.id)}
+                    onClick={() => deleteClassHandler(classes.id as number)}
                   >
                     <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
                       <p className='text-[7px]'> x </p>
@@ -82,7 +73,7 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
                         : 'bg-black'
                     } relative w-8 h-8 rounded-full`}
                     key={classes.id}
-                    onClick={() => deleteClassHandler(classes.id)}
+                    onClick={() => deleteClassHandler(classes.id as number)}
                   >
                     <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
                       <p className='text-[7px]'> x </p>
@@ -128,16 +119,15 @@ const ClassSelectInput: React.FC<PropsTypes> = (props) => {
                         <p>{option.title}</p>
                       </li>
                     ))
-                  : props
-                      .getValues('initialState')
-                      .filter((item) =>
+                  : getValues('initialState')
+                      .filter((item: ClassInitialState) =>
                         classes.length > 0
                           ? classes.find((element) => item.id === element.id)
                             ? false
                             : true
                           : item
                       )
-                      .map((option) => (
+                      .map((option: ClassInitialState) => (
                         <li
                           key={option.title}
                           className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'

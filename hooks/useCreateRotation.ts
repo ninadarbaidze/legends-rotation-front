@@ -1,22 +1,24 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { FormClasses } from 'types/global';
 
 export const useCreateRotation = () => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    control,
-    clearErrors,
-    setError,
-    setFocus,
-    reset,
-    unregister,
-    getValues,
-  } = useForm({ defaultValues: { initialState: [] } });
+  const form = useForm<FormClasses>({
+    defaultValues: { initialState: [], selectedClasses: [] },
+  });
+  const { getValues } = form;
   const options = ['beach', 'stable', 'farm'];
 
   const [initialClassState, setInitialClassState] = useState([]);
-
-  return { options, setValue, getValues, setInitialClassState };
+  const [selectedClasses, setSelectedClasses] = useState<any[]>(
+    getValues('initialState')
+  );
+  return {
+    options,
+    selectedClasses,
+    setSelectedClasses,
+    initialClassState,
+    setInitialClassState,
+    form,
+  };
 };

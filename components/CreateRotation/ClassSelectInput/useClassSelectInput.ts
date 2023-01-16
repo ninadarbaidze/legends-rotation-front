@@ -1,35 +1,37 @@
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { ClassInitialState, SetState } from 'types/global';
 
 export const useClassSelectInput = (
-  setValue: any,
   initialState: boolean,
-  getValues: any,
-  selectedClasses: any,
-  setSelectedClasses: any
+  selectedClasses: ClassInitialState[],
+  setSelectedClasses: SetState<ClassInitialState[]>
 ) => {
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
-  const [classes, setClasses] = useState([]);
+  const [classes, setClasses] = useState<ClassInitialState[]>([]);
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
-
+  const { setValue, getValues } = useFormContext();
   initialState && setValue('initialState', selectedClasses);
   !initialState && setValue('selectedClasses', classes);
 
   const selectOptionHandler = (selectedOption: {
     title: string;
-    icon: string;
+    image: string;
+    color: string;
+    id: number | null;
   }) => {
     if (initialState) {
       setSelectMenuIsVisible(false);
       if (selectedClasses.length < 4) {
-        setSelectedClasses((prevState) => [
+        setSelectedClasses((prevState: ClassInitialState[]) => [
           ...prevState,
           {
             id:
               prevState.length === 0
                 ? 1
-                : prevState[prevState.length - 1].id + 1,
+                : (prevState[prevState.length - 1].id as number) + 1,
             title: selectedOption.title,
-            image: selectedOption.icon,
+            image: selectedOption.image,
             color: colors[0],
           },
         ]);
@@ -47,17 +49,15 @@ export const useClassSelectInput = (
     }
   };
 
-  console.log('class', classes);
-
   const options = [
-    { title: 'Hunter', icon: '/images/hunter.png' },
-    { title: 'Samurai', icon: '/images/samurai.png' },
-    { title: 'Assassin', icon: '/images/assassin.png' },
-    { title: 'Ronin', icon: '/images/ronin.png' },
+    { title: 'Hunter', image: '/images/hunter.png', color: '', id: null },
+    { title: 'Samurai', image: '/images/samurai.png', color: '', id: null },
+    { title: 'Assassin', image: '/images/assassin.png', color: '', id: null },
+    { title: 'Ronin', image: '/images/ronin.png', color: '', id: null },
   ];
 
-  const deleteClassHandler = (classId) => {
-    setSelectedClasses((prevState) => {
+  const deleteClassHandler = (classId: number) => {
+    setSelectedClasses((prevState: ClassInitialState[]) => {
       return prevState.filter((item) => item.id !== classId);
     });
 
@@ -78,5 +78,6 @@ export const useClassSelectInput = (
     selectedClasses,
     deleteClassHandler,
     classes,
+    getValues,
   };
 };
