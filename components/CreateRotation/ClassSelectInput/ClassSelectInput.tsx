@@ -18,7 +18,6 @@ const ClassSelectInput: React.FC<Props> = (props) => {
     props.selectedClasses,
     props.setSelectedClasses
   );
-  // console.log(getValues());
 
   return (
     <>
