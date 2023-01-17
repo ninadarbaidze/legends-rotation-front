@@ -16,7 +16,9 @@ const ClassSelectInput: React.FC<Props> = (props) => {
   } = useClassSelectInput(
     props.initialState,
     props.initialStates,
-    props.setInitialStates
+    props.setInitialStates,
+    props.i as number,
+    props.k
   );
   console.log(getValues());
 

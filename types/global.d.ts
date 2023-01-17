@@ -9,5 +9,38 @@ export type ClassInitialState = {
 
 export type FormClasses = {
   initialState: ClassInitialState[];
-  selectedOptions: ClassInitialState[];
+  spawns: {
+    spawnLocation: string;
+    actions: string[];
+    checkbox: string[];
+    selectedOptions: string[];
+    extra: string[];
+  }[];
+  [];
 };
+
+export const spawns = [
+  {
+    spawn1: {
+      spawnLocation: '',
+      selectedOptions: [],
+      actions: [],
+      extra: [],
+      objective: [],
+    },
+    spawn2: {
+      spawnLocation: '',
+      selectedOptions: [],
+      actions: [],
+      extra: [],
+      objective: [],
+    },
+    spawn3: {
+      spawnLocation: '',
+      selectedOptions: [],
+      actions: [],
+      extra: [],
+      objective: [],
+    },
+  },
+];

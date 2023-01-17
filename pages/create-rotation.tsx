@@ -1,11 +1,14 @@
-import { ClassSelectInput } from 'components';
+import {
+  ClassSelectInput,
+  CustomSelectInput,
+  SpawnComponent,
+} from 'components';
 import Head from 'next/head';
 import { useCreateRotation } from 'hooks';
 import { FormProvider } from 'react-hook-form';
 
 export default function CreateRotation() {
   const { initialStates, setInitialStates, form } = useCreateRotation();
-
   return (
     <>
       <Head>
@@ -19,16 +22,23 @@ export default function CreateRotation() {
         </h1>
         <FormProvider {...form}>
           <form className='flex flex-col gap-12 ml-48'>
-            <ClassSelectInput
-              initialState={true}
-              initialStates={initialStates}
-              setInitialStates={setInitialStates}
-            />
-            <ClassSelectInput
-              initialState={false}
-              initialStates={initialStates}
-              setInitialStates={setInitialStates}
-            />
+            <>
+              <ClassSelectInput
+                initialState={true}
+                initialStates={initialStates}
+                setInitialStates={setInitialStates}
+              />
+
+              <ul>
+                <li>
+                  <SpawnComponent
+                    initialStates={initialStates}
+                    setInitialStates={setInitialStates}
+                    i={0}
+                  />
+                </li>
+              </ul>
+            </>
           </form>
         </FormProvider>
       </div>

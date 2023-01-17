@@ -5,18 +5,24 @@ import { ClassInitialState, SetState } from 'types/global';
 export const useClassSelectInput = (
   initialState: boolean,
   selectedClasses: ClassInitialState[],
-  setSelectedClasses: SetState<ClassInitialState[]>
+  setSelectedClasses: SetState<ClassInitialState[]>,
+  i: number,
+  k: number
 ) => {
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
   const [classes, setClasses] = useState<ClassInitialState[]>([]);
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
   const { setValue, getValues } = useFormContext();
-  // console.log(classes);
-  console.log(getValues());
+
+  // console.log(getValues(`spawns[${i}][${k}]`));
   useEffect(() => {
     initialState && setValue('initialState', selectedClasses);
-    !initialState && setValue('selectedOptions', classes);
-  }, [classes, initialState, selectedClasses, setValue]);
+    !initialState &&
+      setValue(`spawns[${i}].spawn${k}`, {
+        ...getValues(`spawns[${i}].spawn${k}`),
+        selectedOptions: classes,
+      });
+  }, [classes, getValues, i, initialState, k, selectedClasses, setValue]);
 
   const selectOptionHandler = (selectedOption: {
     title: string;

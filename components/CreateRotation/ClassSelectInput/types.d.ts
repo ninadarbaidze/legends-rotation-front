@@ -7,4 +7,5 @@ export type Props = {
   initialStates: selectOptionHandler;
   initialState: boolean;
   setInitialStates: selectOptionHandler;
+  i?: number;
 };

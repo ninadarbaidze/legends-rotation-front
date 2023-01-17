@@ -1,12 +1,14 @@
 import { ChevronDownIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { useCustomSelectInput } from './useCustomSelectInput';
 import { PropsTypes } from './types';
-import { useState } from 'react';
 
 const CustomSelectInput: React.FC<PropsTypes> = (props) => {
-  const [selectedOption, setSelectedOption] = useState('');
-  const { selectMenuIsVisible, setSelectMenuIsVisible, selectOptionHandler } =
-    useCustomSelectInput(setSelectedOption);
+  const {
+    selectMenuIsVisible,
+    setSelectMenuIsVisible,
+    selectOptionHandler,
+    selectedOption,
+  } = useCustomSelectInput(props.i, props.k);
 
   return (
     <>
