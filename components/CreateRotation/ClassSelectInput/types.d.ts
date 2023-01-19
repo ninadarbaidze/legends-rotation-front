@@ -8,4 +8,5 @@ export type Props = {
   initialState: boolean;
   setInitialStates: selectOptionHandler;
   i?: number;
+  k?: number;
 };

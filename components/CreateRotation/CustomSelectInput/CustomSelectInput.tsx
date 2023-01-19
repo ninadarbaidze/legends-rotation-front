@@ -19,14 +19,14 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
         />
       )}
 
-      <div className='font-ubuntu ml-24'>
+      <div className='font-ubuntu'>
         <div
           className={`${props.inputClass} ${
             selectedOption ? 'text-grey-700' : 'text-grey-350'
-          } relative w-56 pr-32 py-2 rounded-md border border-grey-300  font-extralight`}
+          } relative pr-32 py-[0.35rem] rounded-md border border-grey-300  font-extralight`}
           onClick={() => setSelectMenuIsVisible(!selectMenuIsVisible)}
         >
-          <p className='pl-2'>{`${
+          <p className={`pl-2 w-36 ${selectedOption && 'font-normal'}`}>{`${
             selectedOption
               ? selectedOption
               : `Select ${props.placeholder ? props.placeholder : ''}`
@@ -37,7 +37,7 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
         </div>
         {selectMenuIsVisible && (
           <ul
-            className={`${props.inputClass} overflow-y-auto relative w-56 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight z-30`}
+            className={`${props.inputClass} overflow-y-auto absolute bg-white w-56 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight z-30`}
           >
             {props.options.map((option) => (
               <li

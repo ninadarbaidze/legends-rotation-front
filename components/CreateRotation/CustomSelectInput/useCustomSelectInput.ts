@@ -10,7 +10,7 @@ export const useCustomSelectInput = (i: number, k: number) => {
     setSelectedOption(selectedOption);
     setSelectMenuIsVisible(false);
     setValue(`spawns[${i}].spawn${k}`, {
-      ...getValues(`spawns[${i}].spawn{${k}`),
+      ...getValues(`spawns[${i}].spawn${k}`),
       spawnLocation: selectedOption,
     });
   };

@@ -15,6 +15,7 @@ export type FormClasses = {
     checkbox: string[];
     selectedOptions: string[];
     extra: string[];
+    objective: string;
   }[];
   [];
 };

@@ -12,7 +12,7 @@ export const useCreateRotation = () => {
 
   const options = ['beach', 'stable', 'farm'];
   const { getValues } = form;
-  console.log(getValues());
+  // console.log(getValues());
 
   const [initialStates, setInitialStates] = useState<ClassInitialState[]>([]);
 

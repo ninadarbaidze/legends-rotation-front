@@ -1,8 +1,4 @@
-import {
-  ClassSelectInput,
-  CustomSelectInput,
-  SpawnComponent,
-} from 'components';
+import { ClassSelectInput, SpawnComponent } from 'components';
 import Head from 'next/head';
 import { useCreateRotation } from 'hooks';
 import { FormProvider } from 'react-hook-form';
@@ -21,7 +17,7 @@ export default function CreateRotation() {
           Create rotation
         </h1>
         <FormProvider {...form}>
-          <form className='flex flex-col gap-12 ml-48'>
+          <form className='flex flex-col gap-12 px-2 2xl:px-24'>
             <>
               <ClassSelectInput
                 initialState={true}
@@ -30,13 +26,25 @@ export default function CreateRotation() {
               />
 
               <ul>
-                <li>
-                  <SpawnComponent
-                    initialStates={initialStates}
-                    setInitialStates={setInitialStates}
-                    i={0}
-                  />
-                </li>
+                {Array.from({ length: 16 }, (_, i) => i + 1).map((elem, i) => (
+                  <li className='mt-4 flex flex-col' key={i}>
+                    <h2 className='text-2xl font-ubuntu font-bold mb-1'>
+                      Wave {i}
+                    </h2>
+                    <div className='border-2 rounded-lg shadow-md'>
+                      <SpawnComponent
+                        initialStates={initialStates}
+                        setInitialStates={setInitialStates}
+                        i={i}
+                        objective={
+                          i === 2 || i === 4 || i === 7 || i === 10 || i === 13
+                            ? true
+                            : false
+                        }
+                      />
+                    </div>
+                  </li>
+                ))}
               </ul>
             </>
           </form>

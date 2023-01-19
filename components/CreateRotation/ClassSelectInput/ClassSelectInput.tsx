@@ -18,7 +18,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
     props.initialStates,
     props.setInitialStates,
     props.i as number,
-    props.k
+    props.k as number
   );
   console.log(getValues());
 
@@ -30,7 +30,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
           onClick={() => setSelectMenuIsVisible(false)}
         />
       )}
-      <div className='w-96 flex flex-col justify-start items-start '>
+      <div className=' flex flex-col justify-start items-start '>
         <ul className='flex gap-2 mb-2'>
           {props.initialState
             ? props.initialStates.map((classes: ClassInitialState) => (
@@ -98,10 +98,10 @@ const ClassSelectInput: React.FC<Props> = (props) => {
             <div
               className={`${props.inputClass} ${
                 true ? 'text-grey-700' : 'text-grey-350'
-              } relative w-40 pr-32 py-2 rounded-md border border-grey-300  font-extralight`}
+              } relative w-40 pr-32 py-[0.35rem] rounded-md border border-grey-300  font-extralight`}
               onClick={() => setSelectMenuIsVisible(!selectMenuIsVisible)}
             >
-              <p className='pl-2 w-56'>Select classes</p>
+              <p className='pl-2 w-56 text-grey-350'>Select classes</p>
               <div className=''>
                 <ChevronDownIcon className='absolute top-2 right-2 text-grey-350 w-6' />
               </div>
@@ -109,35 +109,41 @@ const ClassSelectInput: React.FC<Props> = (props) => {
 
             {selectMenuIsVisible && (
               <ul
-                className={`${props.inputClass} overflow-y-auto fixed z-30 bg-white w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight`}
+                className={`${props.inputClass} overflow-y-auto absolute z-30 bg-white w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight`}
               >
-                {props.initialState
-                  ? options.map((option) => (
+                {props.initialState ? (
+                  options.map((option) => (
+                    <li
+                      key={option.title}
+                      className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
+                      onClick={() => selectOptionHandler(option)}
+                    >
+                      <p>{option.title}</p>
+                    </li>
+                  ))
+                ) : getValues('initialState').length > 0 ? (
+                  getValues('initialState')
+                    .filter((item: ClassInitialState) =>
+                      classes.length > 0
+                        ? classes.find((element) => item.id === element.id)
+                          ? false
+                          : true
+                        : item
+                    )
+                    .map((option: ClassInitialState) => (
                       <li
-                        key={option.title}
+                        key={option.id}
                         className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
                         onClick={() => selectOptionHandler(option)}
                       >
                         <p>{option.title}</p>
                       </li>
                     ))
-                  : getValues('initialState')
-                      .filter((item: ClassInitialState) =>
-                        classes.length > 0
-                          ? classes.find((element) => item.id === element.id)
-                            ? false
-                            : true
-                          : item
-                      )
-                      .map((option: ClassInitialState) => (
-                        <li
-                          key={option.title}
-                          className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
-                          onClick={() => selectOptionHandler(option)}
-                        >
-                          <p>{option.title}</p>
-                        </li>
-                      ))}
+                ) : (
+                  <li className='text-sm text-gray-400 flex items-center justify-center'>
+                    empty
+                  </li>
+                )}
               </ul>
             )}
           </div>
