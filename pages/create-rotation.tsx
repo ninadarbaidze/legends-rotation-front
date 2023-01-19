@@ -31,7 +31,7 @@ export default function CreateRotation() {
                     <h2 className='text-2xl font-ubuntu font-bold mb-1'>
                       Wave {i}
                     </h2>
-                    <div className='border-2 rounded-lg shadow-md'>
+                    <div>
                       <SpawnComponent
                         initialStates={initialStates}
                         setInitialStates={setInitialStates}
