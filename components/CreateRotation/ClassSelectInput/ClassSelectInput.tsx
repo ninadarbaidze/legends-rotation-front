@@ -20,7 +20,6 @@ const ClassSelectInput: React.FC<Props> = (props) => {
     props.i as number,
     props.k as number
   );
-  console.log(getValues());
 
   return (
     <>
@@ -121,8 +120,8 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                       <p>{option.title}</p>
                     </li>
                   ))
-                ) : getValues('initialState').length > 0 ? (
-                  getValues('initialState')
+                ) : getValues('initialState.class').length > 0 ? (
+                  getValues('initialState.class')
                     .filter((item: ClassInitialState) =>
                       classes.length > 0
                         ? classes.find((element) => item.id === element.id)

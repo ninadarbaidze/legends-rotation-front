@@ -8,7 +8,7 @@ export type ClassInitialState = {
 };
 
 export type FormClasses = {
-  initialState: ClassInitialState[];
+  initialState: { author: string; class: ClassInitialState[] };
   spawns: {
     spawnLocation: string;
     actions: string[];

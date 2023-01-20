@@ -15,7 +15,7 @@ export const useClassSelectInput = (
   const { setValue, getValues } = useFormContext();
 
   useEffect(() => {
-    initialState && setValue('initialState', selectedClasses);
+    initialState && setValue('initialState', { class: selectedClasses });
     !initialState &&
       setValue(`spawns[${i}].spawn${k}`, {
         ...getValues(`spawns[${i}].spawn${k}`),
@@ -29,7 +29,6 @@ export const useClassSelectInput = (
     color: string;
     id: number | null;
   }) => {
-    console.log('me');
     if (initialState) {
       setSelectMenuIsVisible(false);
       if (selectedClasses.length < 4) {

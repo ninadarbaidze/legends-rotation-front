@@ -2,9 +2,11 @@ import { ClassSelectInput, SpawnComponent } from 'components';
 import Head from 'next/head';
 import { useCreateRotation } from 'hooks';
 import { FormProvider } from 'react-hook-form';
+import { NormalInput } from 'components/shared/NormalInput';
 
 export default function CreateRotation() {
-  const { initialStates, setInitialStates, form } = useCreateRotation();
+  const { initialStates, setInitialStates, form, handleSubmit, onSubmit } =
+    useCreateRotation();
   return (
     <>
       <Head>
@@ -17,12 +19,25 @@ export default function CreateRotation() {
           Create rotation
         </h1>
         <FormProvider {...form}>
-          <form className='flex flex-col gap-12 px-2 2xl:px-24'>
+          <form
+            className='flex flex-col gap-12 px-2 2xl:px-24'
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <>
+              <button>submit</button>
+
               <ClassSelectInput
                 initialState={true}
                 initialStates={initialStates}
                 setInitialStates={setInitialStates}
+              />
+              <NormalInput
+                type={'text'}
+                placeholder={'author'}
+                id={'author'}
+                registerOptions={{ required: 'required field' }}
+                inputName={'initialState.author'}
+                className={''}
               />
 
               <ul>

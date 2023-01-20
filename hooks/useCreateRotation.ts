@@ -5,15 +5,16 @@ import { ClassInitialState, FormClasses } from 'types/global';
 export const useCreateRotation = () => {
   const form = useForm<FormClasses>({
     defaultValues: {
-      initialState: [],
+      initialState: { author: '', class: [] },
       spawns: [],
     },
   });
 
   const options = ['beach', 'stable', 'farm'];
-  const { getValues } = form;
-  // console.log(getValues());
-
+  const { handleSubmit } = form;
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   const [initialStates, setInitialStates] = useState<ClassInitialState[]>([]);
 
   return {
@@ -21,5 +22,7 @@ export const useCreateRotation = () => {
     initialStates,
     setInitialStates,
     form,
+    handleSubmit,
+    onSubmit,
   };
 };
