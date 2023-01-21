@@ -138,10 +138,21 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                     .map((option: ClassInitialState) => (
                       <li
                         key={option.id}
-                        className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
+                        className='flex justify-between items-center px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
                         onClick={() => selectOptionHandler(option)}
                       >
                         <p>{option.title}</p>
+                        <div
+                          className={`${
+                            option.color === 'red'
+                              ? 'bg-red2'
+                              : option.color === 'blue'
+                              ? 'bg-blue'
+                              : option.color === 'green'
+                              ? 'bg-green'
+                              : 'bg-black'
+                          } w-2 h-2 rounded-full border border-white`}
+                        />
                       </li>
                     ))
                 ) : (
