@@ -8,7 +8,13 @@ export type ClassInitialState = {
 };
 
 export type FormClasses = {
-  initialState: { author: string; class: ClassInitialState[] };
+  initialState: {
+    author: string;
+    class: ClassInitialState[];
+    date: string;
+    version: string;
+    weeklyModifier: string;
+  };
   spawns: {
     spawnLocation: string;
     actions: string[];

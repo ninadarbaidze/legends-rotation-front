@@ -2,19 +2,21 @@ import React from 'react';
 import { Props } from './types';
 import { useNormalInput } from './useNormalInput';
 import { ErrorMessage } from '@hookform/error-message';
+import { getErrorMessage } from 'helpers';
 
 const NormalInput: React.FC<Props> = (props) => {
-  const { register, errors, isDirty } = useNormalInput();
-
+  const { register, errors } = useNormalInput();
   return (
-    <div className='font-ubuntu flex flex-col w-64'>
-      <label htmlFor={props.id}>Author</label>
+    <div className={`${props.width} w-48 font-ubuntu flex flex-col`}>
+      <label htmlFor={props.id}>{props.label}</label>
       <input
         id={props.id}
         type={props.type}
         className={`${props.className} ${
-          isDirty && errors.inputName ? 'border-red2' : 'border-grey-300'
-        } py-[0.35rem] rounded-md border   font-extralight pl-2`}
+          typeof getErrorMessage(errors, props.inputName) === 'string'
+            ? 'border-red2'
+            : 'border-grey-300'
+        } py-[0.35rem] rounded-md border font-extralight pl-2`}
         {...register(props.inputName, props.registerOptions)}
         placeholder={props.placeholder}
       />

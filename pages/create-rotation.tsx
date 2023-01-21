@@ -1,12 +1,23 @@
-import { ClassSelectInput, SpawnComponent } from 'components';
+import {
+  ClassSelectInput,
+  CustomSelectInput,
+  SpawnComponent,
+} from 'components';
 import Head from 'next/head';
 import { useCreateRotation } from 'hooks';
 import { FormProvider } from 'react-hook-form';
 import { NormalInput } from 'components/shared/NormalInput';
 
 export default function CreateRotation() {
-  const { initialStates, setInitialStates, form, handleSubmit, onSubmit } =
-    useCreateRotation();
+  const {
+    initialStates,
+    setInitialStates,
+    form,
+    handleSubmit,
+    onSubmit,
+    weeklyModifierOptions,
+    dataChanges,
+  } = useCreateRotation();
   return (
     <>
       <Head>
@@ -25,22 +36,54 @@ export default function CreateRotation() {
           >
             <>
               <button>submit</button>
+              <div className='flex flex-col lg:flex-row lg:items-end gap-2'>
+                <div className='flex items-end gap-1 lg:mt-4 mb-3 lg:mb-0'>
+                  <ClassSelectInput
+                    initialState={true}
+                    initialStates={initialStates}
+                    setInitialStates={setInitialStates}
+                  />
+                  <CustomSelectInput
+                    options={weeklyModifierOptions}
+                    inputClass={'w-48'}
+                    isInitial={true}
+                  />
+                </div>
+                <div className='flex items-start gap-1 h-[4.5rem] lg:items-end'>
+                  <NormalInput
+                    type={'text'}
+                    placeholder={'author'}
+                    label='author'
+                    id={'author'}
+                    // registerOptions={{ required: 'required field' }}
+                    inputName={'initialState.author'}
+                  />
 
-              <ClassSelectInput
-                initialState={true}
-                initialStates={initialStates}
-                setInitialStates={setInitialStates}
-              />
-              <NormalInput
-                type={'text'}
-                placeholder={'author'}
-                id={'author'}
-                registerOptions={{ required: 'required field' }}
-                inputName={'initialState.author'}
-                className={''}
-              />
+                  <NormalInput
+                    type='text'
+                    placeholder='version'
+                    id='version'
+                    label='version'
+                    registerOptions={{
+                      pattern: {
+                        value: /^[0-9_.-]*$/,
+                        message: 'use only numbers',
+                      },
+                    }}
+                    inputName='initialState.version'
+                    width='w-28'
+                  />
+                </div>
+                <NormalInput
+                  type='date'
+                  placeholder='date'
+                  id='date'
+                  label='date'
+                  inputName={'initialState.date'}
+                />
+              </div>
 
-              <ul>
+              <ul className='-mt-10'>
                 {Array.from({ length: 16 }, (_, i) => i + 1).map((elem, i) => (
                   <li className='mt-4 flex flex-col' key={i}>
                     <h2 className='text-2xl font-ubuntu font-bold mb-1'>
@@ -56,6 +99,7 @@ export default function CreateRotation() {
                             ? true
                             : false
                         }
+                        dataChanges={dataChanges}
                       />
                     </div>
                   </li>

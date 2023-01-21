@@ -51,6 +51,7 @@ const SpawnComponent: React.FC<Props> = (props) => {
                       inputClass={'w-40'}
                       i={props.i}
                       k={i + 1}
+                      isInitial={false}
                     />
                   </div>
                   <div className='flex flex-col justify-start items-start'>
@@ -60,6 +61,7 @@ const SpawnComponent: React.FC<Props> = (props) => {
                       initialState={false}
                       initialStates={props.initialStates}
                       setInitialStates={props.setInitialStates}
+                      dataChanges={props.dataChanges}
                     />
                   </div>
                 </div>

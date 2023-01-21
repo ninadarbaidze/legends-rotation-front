@@ -1,8 +1,10 @@
 export type Props = {
   type: string;
   placeholder: string;
-  registerOptions: {};
+  registerOptions?: {};
   inputName: string;
   className?: string;
-  id: stirng;
+  id: string;
+  label: string;
+  width?: string;
 };

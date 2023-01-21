@@ -7,21 +7,24 @@ export const useClassSelectInput = (
   selectedClasses: ClassInitialState[],
   setSelectedClasses: SetState<ClassInitialState[]>,
   i: number,
-  k: number
+  k: number,
+  dataChanges: any
 ) => {
-  const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
-  const [classes, setClasses] = useState<ClassInitialState[]>([]);
-  const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
   const { setValue, getValues } = useFormContext();
+  const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
+  const [classes, setClasses] = useState<ClassInitialState[]>(
+    getValues(`spawns[${i}].spawn${k}`)
+      ? getValues(`spawns[${i}].spawn${k}`).selectedOptions
+      : []
+  );
+  const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
 
   useEffect(() => {
-    initialState && setValue('initialState', { class: selectedClasses });
-    !initialState &&
-      setValue(`spawns[${i}].spawn${k}`, {
-        ...getValues(`spawns[${i}].spawn${k}`),
-        selectedOptions: classes,
-      });
-  }, [classes, getValues, i, initialState, k, selectedClasses, setValue]);
+    setValue(`spawns[${i}].spawn${k}`, {
+      ...getValues(`spawns[${i}].spawn${k}`),
+      selectedOptions: classes,
+    });
+  }, [classes, dataChanges, i, k, setValue]);
 
   const selectOptionHandler = (selectedOption: {
     title: string;
@@ -64,18 +67,13 @@ export const useClassSelectInput = (
     { title: 'Assassin', image: '/images/assassin.png', color: '', id: null },
     { title: 'Ronin', image: '/images/ronin.png', color: '', id: null },
   ];
-
   const deleteClassHandler = (classId: number) => {
     if (initialState) {
       setSelectedClasses((prevState: ClassInitialState[]) => {
         return prevState.filter((item) => item.id !== classId);
       });
-      setClasses((prevState: ClassInitialState[]) => {
-        return prevState.filter((item) => item.id !== classId);
-      });
-
       setColors((prevState) => {
-        const deleteColor = selectedClasses.filter(
+        const deleteColor = selectedClasses?.filter(
           (item) => item.id === classId
         )[0].color;
         prevState.unshift(deleteColor);
@@ -85,9 +83,8 @@ export const useClassSelectInput = (
       setClasses((prevState: ClassInitialState[]) => {
         return prevState.filter((item) => item.id !== classId);
       });
-
       setColors((prevState) => {
-        const deleteColor = selectedClasses.filter(
+        const deleteColor = selectedClasses?.filter(
           (item) => item.id === classId
         )[0].color;
         prevState.unshift(deleteColor);
@@ -105,5 +102,6 @@ export const useClassSelectInput = (
     deleteClassHandler,
     classes,
     getValues,
+    setClasses,
   };
 };

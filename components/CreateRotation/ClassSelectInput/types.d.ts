@@ -9,4 +9,5 @@ export type Props = {
   setInitialStates: selectOptionHandler;
   i?: number;
   k?: number;
+  labelName?: string;
 };

@@ -4,6 +4,7 @@ export type PropsTypes = {
   placeholder?: string;
   selectedOption?: string;
   setSelectedOption?: (arg: string) => void;
-  i: number;
-  k: number;
+  i?: number;
+  k?: number;
+  isInitial: boolean;
 };

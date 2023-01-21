@@ -8,7 +8,11 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
     setSelectMenuIsVisible,
     selectOptionHandler,
     selectedOption,
-  } = useCustomSelectInput(props.i, props.k);
+  } = useCustomSelectInput(
+    props.i as number,
+    props.k as number,
+    props.isInitial
+  );
 
   return (
     <>

@@ -13,24 +13,28 @@ const ClassSelectInput: React.FC<Props> = (props) => {
     deleteClassHandler,
     classes,
     getValues,
+    setClasses,
+    deletes,
   } = useClassSelectInput(
     props.initialState,
     props.initialStates,
     props.setInitialStates,
     props.i as number,
-    props.k as number
+    props.k as number,
+    props.dataChanges
   );
 
   return (
     <>
       {selectMenuIsVisible && (
         <div
-          className='absolute top-0 left-0 w-screen h-screen z-20'
+          className='absolute top-0 left-0 w-screen h-screen z-20 '
           onClick={() => setSelectMenuIsVisible(false)}
         />
       )}
-      <div className=' flex flex-col justify-start items-start '>
-        <ul className='flex gap-2 mb-2'>
+      <div className=' flex flex-col justify-end items-start font-ubuntu h-16'>
+        <p className=''>{props.labelName}</p>
+        <ul className='flex gap-2 mb-1'>
           {props.initialState
             ? props.initialStates.map((classes: ClassInitialState) => (
                 <>
@@ -97,10 +101,12 @@ const ClassSelectInput: React.FC<Props> = (props) => {
             <div
               className={`${props.inputClass} ${
                 true ? 'text-grey-700' : 'text-grey-350'
-              } relative w-40 pr-32 py-[0.35rem] rounded-md border border-grey-300  font-extralight`}
+              } relative  w-40 pr-18 py-[0.35rem] rounded-md border border-grey-300  font-extralight`}
               onClick={() => setSelectMenuIsVisible(!selectMenuIsVisible)}
             >
-              <p className='pl-2 w-56 text-grey-350'>Select classes</p>
+              <p className='pl-2 text-grey-350 cursor-pointer'>
+                Select classes
+              </p>
               <div className=''>
                 <ChevronDownIcon className='absolute top-2 right-2 text-grey-350 w-6' />
               </div>
@@ -120,8 +126,8 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                       <p>{option.title}</p>
                     </li>
                   ))
-                ) : getValues('initialState.class').length > 0 ? (
-                  getValues('initialState.class')
+                ) : props.initialStates.length > 0 ? (
+                  props.initialStates
                     .filter((item: ClassInitialState) =>
                       classes.length > 0
                         ? classes.find((element) => item.id === element.id)
