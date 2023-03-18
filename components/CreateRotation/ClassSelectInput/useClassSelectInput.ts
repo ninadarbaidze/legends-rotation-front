@@ -13,24 +13,37 @@ export const useClassSelectInput = (
   const { setValue, getValues } = useFormContext();
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
   const [classes, setClasses] = useState<ClassInitialState[]>(
-    getValues(`spawns[${i}].spawn${k}`)
-      ? getValues(`spawns[${i}].spawn${k}`).selectedOptions
+    getValues(`waves[${i}].spawn${k}`)
+      ? getValues(`waves[${i}].spawn${k}`).selectedOptions
       : []
   );
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
 
   useEffect(() => {
-    setValue(`spawns[${i}].spawn${k}`, {
-      ...getValues(`spawns[${i}].spawn${k}`),
-      selectedOptions: classes,
-    });
-  }, [classes, dataChanges, i, k, setValue]);
+    if (initialState) {
+      setValue('initialState.initialClasses', selectedClasses);
+    } else {
+      setValue(`waves[${i}].spawn${k}`, {
+        ...getValues(`waves[${i}].spawn${k}`),
+        selectedOptions: classes,
+      });
+    }
+  }, [
+    classes,
+    dataChanges,
+    getValues,
+    i,
+    initialState,
+    k,
+    selectedClasses,
+    setValue,
+  ]);
 
   const selectOptionHandler = (selectedOption: {
     title: string;
     image: string;
     color: string;
-    id: number | null;
+    classId: number | null;
   }) => {
     if (initialState) {
       setSelectMenuIsVisible(false);
@@ -38,10 +51,10 @@ export const useClassSelectInput = (
         setSelectedClasses((prevState: ClassInitialState[]) => [
           ...prevState,
           {
-            id:
+            classId:
               prevState.length === 0
                 ? 1
-                : (prevState[prevState.length - 1].id as number) + 1,
+                : (prevState[prevState.length - 1].classId as number) + 1,
             title: selectedOption.title,
             image: selectedOption.image,
             color: colors[0],
@@ -62,30 +75,40 @@ export const useClassSelectInput = (
   };
 
   const options = [
-    { title: 'Hunter', image: '/images/hunter.png', color: '', id: null },
-    { title: 'Samurai', image: '/images/samurai.png', color: '', id: null },
-    { title: 'Assassin', image: '/images/assassin.png', color: '', id: null },
-    { title: 'Ronin', image: '/images/ronin.png', color: '', id: null },
+    { title: 'Hunter', image: '/images/hunter.png', color: '', classId: null },
+    {
+      title: 'Samurai',
+      image: '/images/samurai.png',
+      color: '',
+      classId: null,
+    },
+    {
+      title: 'Assassin',
+      image: '/images/assassin.png',
+      color: '',
+      classId: null,
+    },
+    { title: 'Ronin', image: '/images/ronin.png', color: '', classId: null },
   ];
   const deleteClassHandler = (classId: number) => {
     if (initialState) {
       setSelectedClasses((prevState: ClassInitialState[]) => {
-        return prevState.filter((item) => item.id !== classId);
+        return prevState.filter((item) => item.classId !== classId);
       });
       setColors((prevState) => {
         const deleteColor = selectedClasses?.filter(
-          (item) => item.id === classId
+          (item) => item.classId === classId
         )[0].color;
         prevState.unshift(deleteColor);
         return prevState;
       });
     } else {
       setClasses((prevState: ClassInitialState[]) => {
-        return prevState.filter((item) => item.id !== classId);
+        return prevState.filter((item) => item.classId !== classId);
       });
       setColors((prevState) => {
         const deleteColor = selectedClasses?.filter(
-          (item) => item.id === classId
+          (item) => item.classId === classId
         )[0].color;
         prevState.unshift(deleteColor);
         return prevState;

@@ -18,8 +18,8 @@ const ChooseExtra: React.FC<Props> = (props) => {
             options={extraOptions}
             isMulti={true}
             onChange={(e) =>
-              setValue(`spawns[${props.i}].spawn${Number(props.k)}`, {
-                ...getValues(`spawns[${props.i}].spawn${Number(props.k)}`),
+              setValue(`waves[${props.i}].spawn${Number(props.k)}`, {
+                ...getValues(`waves[${props.i}].spawn${Number(props.k)}`),
                 extra: e,
               })
             }

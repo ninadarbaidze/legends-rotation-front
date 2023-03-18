@@ -1,4 +1,3 @@
-import { spawn } from 'child_process';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ClassInitialState, FormClasses } from 'types/global';
@@ -11,9 +10,9 @@ export const useCreateRotation = () => {
         date: '',
         version: '',
         weeklyModifier: '',
-        class: [],
+        initialClasses: [],
       },
-      spawns: [
+      waves: [
         ...Array.from({ length: 16 }, (_, i) => {
           i + 1;
         }).map((obj) => ({
@@ -51,10 +50,34 @@ export const useCreateRotation = () => {
 
   const onSubmit = (data) => {
     setDataChanged(true);
-    console.log('submitted data', data);
+    console.log('submitted data', {
+      ...data.initialState,
+      initialState: data.initialState,
+      waves: data.waves.map((wave) => ({
+        ...wave,
+        spawn1: {
+          ...wave.spawn1,
+          selectedOptions: wave.spawn1?.selectedOptions.map((spawnClass) => ({
+            classId: spawnClass.classId,
+          })),
+        },
+        spawn2: {
+          ...wave.spawn2,
+          selectedOptions: wave.spawn2?.selectedOptions.map((spawnClass) => ({
+            classId: spawnClass.classId,
+          })),
+        },
+        spawn3: {
+          ...wave.spawn3,
+          selectedOptions: wave.spawn3?.selectedOptions.map((spawnClass) => ({
+            classId: spawnClass.classId,
+          })),
+        },
+      })),
+    });
   };
   const [initialStates, setInitialStates] = useState<ClassInitialState[]>(
-    getValues(`initialState.class`)
+    getValues(`initialState.initialClasses`)
   );
   const weeklyModifierOptions = [
     'stat. eff. immunity',

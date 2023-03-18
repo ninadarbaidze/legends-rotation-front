@@ -1,7 +1,7 @@
 export type SetState<T> = Dispatch<SetStateAction<T>>;
 
 export type ClassInitialState = {
-  id: number | null;
+  classId: number | null;
   title: string;
   image: string;
   color: string;
@@ -10,44 +10,34 @@ export type ClassInitialState = {
 export type FormClasses = {
   initialState: {
     author: string;
-    class: ClassInitialState[];
+    initialClasses: ClassInitialState[];
     date: string;
     version: string;
     weeklyModifier: string;
   };
-  spawns: {
-    spawnLocation: string;
-    actions: string[];
-    checkbox: string[];
-    selectedOptions: string[];
-    extra: string[];
-    objective: string;
-  }[];
-  [];
+  waves: Wave[];
 };
 
-export const spawns = [
-  {
-    spawn1: {
-      spawnLocation: '',
-      selectedOptions: [],
-      actions: [],
-      extra: [],
-      objective: [],
-    },
-    spawn2: {
-      spawnLocation: '',
-      selectedOptions: [],
-      actions: [],
-      extra: [],
-      objective: [],
-    },
-    spawn3: {
-      spawnLocation: '',
-      selectedOptions: [],
-      actions: [],
-      extra: [],
-      objective: [],
-    },
+export const Wave = {
+  spawn1: {
+    spawnLocation: '',
+    selectedOptions: [],
+    actions: [],
+    extra: [],
+    objective: '',
   },
-];
+  spawn2: {
+    spawnLocation: '',
+    selectedOptions: [],
+    actions: [],
+    extra: [],
+    objective: '',
+  },
+  spawn3: {
+    spawnLocation: '',
+    selectedOptions: [],
+    actions: [],
+    extra: [],
+    objective: '',
+  },
+};

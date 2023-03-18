@@ -87,7 +87,7 @@ export default function CreateRotation() {
                 {Array.from({ length: 16 }, (_, i) => i + 1).map((elem, i) => (
                   <li className='mt-4 flex flex-col' key={i}>
                     <h2 className='text-2xl font-ubuntu font-bold mb-1'>
-                      Wave {i}
+                      Waves {i}
                     </h2>
                     <div>
                       <SpawnComponent

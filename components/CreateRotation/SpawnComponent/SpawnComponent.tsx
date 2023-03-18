@@ -16,8 +16,8 @@ const SpawnComponent: React.FC<Props> = (props) => {
             options={objectiveOptions}
             isMulti={false}
             onChange={(e) =>
-              setValue(`spawns[${props.i}]`, {
-                ...getValues(`spawns[${props.i}]`),
+              setValue(`waves[${props.i}]`, {
+                ...getValues(`waves[${props.i}]`),
                 objective: e,
               })
             }

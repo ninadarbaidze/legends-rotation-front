@@ -48,8 +48,10 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                         ? 'bg-green'
                         : 'bg-black'
                     } relative w-8 h-8 rounded-full`}
-                    key={classes.id}
-                    onClick={() => deleteClassHandler(classes.id as number)}
+                    key={classes.classId}
+                    onClick={() =>
+                      deleteClassHandler(classes.classId as number)
+                    }
                   >
                     <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
                       <p className='text-[7px]'> x </p>
@@ -77,8 +79,10 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                         ? 'bg-green'
                         : 'bg-black'
                     } relative w-8 h-8 rounded-full`}
-                    key={classes.id}
-                    onClick={() => deleteClassHandler(classes.id as number)}
+                    key={classes.classId}
+                    onClick={() =>
+                      deleteClassHandler(classes.classId as number)
+                    }
                   >
                     <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
                       <p className='text-[7px]'> x </p>
@@ -130,14 +134,16 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                   props.initialStates
                     .filter((item: ClassInitialState) =>
                       classes.length > 0
-                        ? classes.find((element) => item.id === element.id)
+                        ? classes.find(
+                            (element) => item.classId === element.classId
+                          )
                           ? false
                           : true
                         : item
                     )
                     .map((option: ClassInitialState) => (
                       <li
-                        key={option.id}
+                        key={option.classId}
                         className='flex justify-between items-center px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
                         onClick={() => selectOptionHandler(option)}
                       >

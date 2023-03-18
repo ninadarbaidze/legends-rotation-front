@@ -19,8 +19,8 @@ const ChooseActions: React.FC<Props> = (props) => {
             options={actionOptions}
             isMulti={true}
             onChange={(e) =>
-              setValue(`spawns[${props.i}].spawn${Number(props.k)}`, {
-                ...getValues(`spawns[${props.i}].spawn${Number(props.k)}`),
+              setValue(`waves[${props.i}].spawn${Number(props.k)}`, {
+                ...getValues(`waves[${props.i}].spawn${Number(props.k)}`),
                 actions: e,
               })
             }

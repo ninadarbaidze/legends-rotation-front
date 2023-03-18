@@ -18,8 +18,8 @@ export const useCustomSelectInput = (
       ? setValue(`initialState`, {
           weeklyModifier: selectedOption,
         })
-      : setValue(`spawns[${i}].spawn${k}`, {
-          ...getValues(`spawns[${i}].spawn${k}`),
+      : setValue(`waves[${i}].spawn${k}`, {
+          ...getValues(`waves[${i}].spawn${k}`),
           spawnLocation: selectedOption,
         });
   };
