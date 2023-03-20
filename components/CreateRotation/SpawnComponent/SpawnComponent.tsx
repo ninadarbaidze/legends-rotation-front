@@ -29,7 +29,7 @@ const SpawnComponent: React.FC<Props> = (props) => {
       <div className='flex flex-col lg:flex-row gap-1 border-2 rounded-lg shadow-md'>
         {Array.from({ length: 3 }, (_, i) => {
           i + 1;
-        }).map((elem, i) => (
+        })?.map((elem, i) => (
           <>
             <div
               key={objectiveOptions[i].value}

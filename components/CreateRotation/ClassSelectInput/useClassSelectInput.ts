@@ -20,6 +20,7 @@ export const useClassSelectInput = (
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
 
   useEffect(() => {
+    console.log(selectedClasses);
     if (initialState) {
       setValue('initialState.initialClasses', selectedClasses);
     } else {

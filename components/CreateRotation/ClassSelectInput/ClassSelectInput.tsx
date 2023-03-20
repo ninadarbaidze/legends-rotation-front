@@ -33,7 +33,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
         <p className=''>{props.labelName}</p>
         <ul className='flex gap-2 mb-1'>
           {props.initialState
-            ? props.initialStates.map((classes: ClassInitialState) => (
+            ? props.initialStates?.map((classes: ClassInitialState) => (
                 <>
                   <li
                     className={`${
@@ -64,7 +64,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                   </li>
                 </>
               ))
-            : classes.map((classes) => (
+            : classes?.map((classes) => (
                 <>
                   <li
                     className={`${
@@ -118,7 +118,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                 className={`${props.inputClass} overflow-y-auto absolute z-30 bg-white w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight`}
               >
                 {props.initialState ? (
-                  options.map((option) => (
+                  options?.map((option) => (
                     <li
                       key={option.title}
                       className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
@@ -138,7 +138,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                           : true
                         : item
                     )
-                    .map((option: ClassInitialState) => (
+                    ?.map((option: ClassInitialState) => (
                       <li
                         key={option.classId}
                         className='flex justify-between items-center px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'

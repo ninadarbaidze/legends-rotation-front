@@ -18,6 +18,7 @@ export default function CreateRotation() {
     weeklyModifierOptions,
     dataChanges,
   } = useCreateRotation();
+
   return (
     <>
       <Head>
@@ -83,7 +84,7 @@ export default function CreateRotation() {
               </div>
 
               <ul className='-mt-10'>
-                {Array.from({ length: 16 }, (_, i) => i + 1).map((elem, i) => (
+                {Array.from({ length: 16 }, (_, i) => i + 1)?.map((elem, i) => (
                   <li className='mt-4 flex flex-col' key={i}>
                     <h2 className='text-2xl font-ubuntu font-bold mb-1'>
                       Waves {i}

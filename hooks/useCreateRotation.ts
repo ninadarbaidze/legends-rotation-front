@@ -1,8 +1,15 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
 import { ClassInitialState, FormClasses } from 'types/global';
 
 export const useCreateRotation = () => {
+  const { data } = useQuery('all-rotations', () => {
+    return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/test`);
+  });
+
+  console.log(data?.data.initialState.author);
   const form = useForm<FormClasses>({
     defaultValues: {
       initialState: {
@@ -15,7 +22,7 @@ export const useCreateRotation = () => {
       waves: [
         ...Array.from({ length: 16 }, (_, i) => {
           i + 1;
-        }).map(() => ({
+        })?.map(() => ({
           spawn1: {
             spawnLocation: '',
             actions: [],
@@ -44,6 +51,11 @@ export const useCreateRotation = () => {
       ],
     },
   });
+
+  useEffect(() => {
+    form.reset(data?.data);
+  }, [data, form]);
+
   const options = ['beach', 'stable', 'farm'];
   const [dataChanges, setDataChanged] = useState(false);
   const { handleSubmit, getValues } = form;
@@ -57,21 +69,27 @@ export const useCreateRotation = () => {
           ...wave,
           spawn1: {
             ...wave.spawn1,
-            selectedOptions: wave.spawn1?.selectedOptions.map((spawnClass) => ({
-              classId: spawnClass.classId,
-            })),
+            selectedOptions: wave.spawn1?.selectedOptions?.map(
+              (spawnClass) => ({
+                classId: spawnClass.classId,
+              })
+            ),
           },
           spawn2: {
             ...wave.spawn2,
-            selectedOptions: wave.spawn2?.selectedOptions.map((spawnClass) => ({
-              classId: spawnClass.classId,
-            })),
+            selectedOptions: wave.spawn2?.selectedOptions?.map(
+              (spawnClass) => ({
+                classId: spawnClass.classId,
+              })
+            ),
           },
           spawn3: {
             ...wave.spawn3,
-            selectedOptions: wave.spawn3?.selectedOptions.map((spawnClass) => ({
-              classId: spawnClass.classId,
-            })),
+            selectedOptions: wave.spawn3?.selectedOptions?.map(
+              (spawnClass) => ({
+                classId: spawnClass.classId,
+              })
+            ),
           },
         })),
       });
