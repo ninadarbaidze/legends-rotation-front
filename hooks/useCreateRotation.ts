@@ -49,32 +49,35 @@ export const useCreateRotation = () => {
   const { handleSubmit, getValues } = form;
 
   const onSubmit = (data) => {
-    setDataChanged(true);
-    console.log('submitted data', {
-      ...data.initialState,
-      initialState: data.initialState,
-      waves: data.waves.map((wave) => ({
-        ...wave,
-        spawn1: {
-          ...wave.spawn1,
-          selectedOptions: wave.spawn1?.selectedOptions.map((spawnClass) => ({
-            classId: spawnClass.classId,
-          })),
-        },
-        spawn2: {
-          ...wave.spawn2,
-          selectedOptions: wave.spawn2?.selectedOptions.map((spawnClass) => ({
-            classId: spawnClass.classId,
-          })),
-        },
-        spawn3: {
-          ...wave.spawn3,
-          selectedOptions: wave.spawn3?.selectedOptions.map((spawnClass) => ({
-            classId: spawnClass.classId,
-          })),
-        },
-      })),
-    });
+    try {
+      setDataChanged(true);
+      console.log('submitted data', {
+        initialState: data.initialState,
+        waves: data.waves.map((wave) => ({
+          ...wave,
+          spawn1: {
+            ...wave.spawn1,
+            selectedOptions: wave.spawn1?.selectedOptions.map((spawnClass) => ({
+              classId: spawnClass.classId,
+            })),
+          },
+          spawn2: {
+            ...wave.spawn2,
+            selectedOptions: wave.spawn2?.selectedOptions.map((spawnClass) => ({
+              classId: spawnClass.classId,
+            })),
+          },
+          spawn3: {
+            ...wave.spawn3,
+            selectedOptions: wave.spawn3?.selectedOptions.map((spawnClass) => ({
+              classId: spawnClass.classId,
+            })),
+          },
+        })),
+      });
+    } catch (err: any) {
+      console.log(err);
+    }
   };
   const [initialStates, setInitialStates] = useState<ClassInitialState[]>(
     getValues(`initialState.initialClasses`)

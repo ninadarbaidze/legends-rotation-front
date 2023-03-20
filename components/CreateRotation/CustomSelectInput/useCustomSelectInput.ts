@@ -15,9 +15,7 @@ export const useCustomSelectInput = (
     setSelectMenuIsVisible(false);
 
     isInitial
-      ? setValue(`initialState`, {
-          weeklyModifier: selectedOption,
-        })
+      ? setValue(`initialState.weeklyModifier`, selectedOption)
       : setValue(`waves[${i}].spawn${k}`, {
           ...getValues(`waves[${i}].spawn${k}`),
           spawnLocation: selectedOption,
