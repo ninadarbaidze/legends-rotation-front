@@ -6,7 +6,7 @@ import {
 import Head from 'next/head';
 import { useCreateRotation } from 'hooks';
 import { FormProvider } from 'react-hook-form';
-import { NormalInput } from 'components/shared/NormalInput';
+import { NormalInput } from 'components';
 
 export default function CreateRotation() {
   const {
@@ -55,7 +55,6 @@ export default function CreateRotation() {
                     placeholder={'author'}
                     label='author'
                     id={'author'}
-                    // registerOptions={{ required: 'required field' }}
                     inputName={'initialState.author'}
                   />
 

@@ -10,4 +10,5 @@ export type Props = {
   i?: number;
   k?: number;
   labelName?: string;
+  dataChanges?: boolean;
 };

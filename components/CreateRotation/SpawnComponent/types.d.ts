@@ -5,4 +5,5 @@ export type Props = {
   initialStates: ClassInitialState[];
   objective: boolean;
   setInitialStates: SetState<ClassInitialState[]>;
+  dataChanges: boolean;
 };

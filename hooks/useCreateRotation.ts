@@ -15,7 +15,7 @@ export const useCreateRotation = () => {
       waves: [
         ...Array.from({ length: 16 }, (_, i) => {
           i + 1;
-        }).map((obj) => ({
+        }).map(() => ({
           spawn1: {
             spawnLocation: '',
             actions: [],
@@ -48,7 +48,7 @@ export const useCreateRotation = () => {
   const [dataChanges, setDataChanged] = useState(false);
   const { handleSubmit, getValues } = form;
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FormClasses) => {
     try {
       setDataChanged(true);
       console.log('submitted data', {

@@ -18,26 +18,26 @@ export type FormClasses = {
   waves: Wave[];
 };
 
-export const Wave = {
+export type Wave = {
   spawn1: {
-    spawnLocation: '',
-    selectedOptions: [],
-    actions: [],
-    extra: [],
-    objective: '',
-  },
+    spawnLocation: string;
+    selectedOptions: ClassInitialState[];
+    actions: string[];
+    extra: string[];
+    objective: string;
+  };
   spawn2: {
-    spawnLocation: '',
-    selectedOptions: [],
-    actions: [],
-    extra: [],
-    objective: '',
-  },
+    spawnLocation: string;
+    selectedOptions: ClassInitialState[];
+    actions: string[];
+    extra: string[];
+    objective: string;
+  };
   spawn3: {
-    spawnLocation: '',
-    selectedOptions: [],
-    actions: [],
-    extra: [],
-    objective: '',
-  },
+    spawnLocation: string;
+    selectedOptions: ClassInitialState[];
+    actions: string[];
+    extra: string[];
+    objective: string;
+  };
 };
