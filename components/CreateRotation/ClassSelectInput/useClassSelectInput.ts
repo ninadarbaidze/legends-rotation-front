@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ClassInitialState, SetState } from 'types/global';
+import { ClassInitialState, FormClasses, SetState } from 'types/global';
 
 export const useClassSelectInput = (
   initialState: boolean,
@@ -8,19 +8,17 @@ export const useClassSelectInput = (
   setSelectedClasses: SetState<ClassInitialState[]>,
   i: number,
   k: number,
-  dataChanges: any
+  hydratedData: FormClasses,
+  defaultDataTouched: boolean,
+  setDefaultDataTouched: SetState<boolean>,
+  deleteAllRelatedClass?: (arg0: number) => void
 ) => {
   const { setValue, getValues } = useFormContext();
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
-  const [classes, setClasses] = useState<ClassInitialState[]>(
-    getValues(`waves[${i}].spawn${k}`)
-      ? getValues(`waves[${i}].spawn${k}`).selectedOptions
-      : []
-  );
+  const [classes, setClasses] = useState<ClassInitialState[]>([]);
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
 
   useEffect(() => {
-    console.log(selectedClasses);
     if (initialState) {
       setValue('initialState.initialClasses', selectedClasses);
     } else {
@@ -28,11 +26,16 @@ export const useClassSelectInput = (
         ...getValues(`waves[${i}].spawn${k}`),
         selectedOptions: classes,
       });
+      !defaultDataTouched &&
+        setClasses(
+          (hydratedData?.waves[i] as any)[`spawn${k}`]?.selectedOptions
+        );
     }
   }, [
     classes,
-    dataChanges,
+    defaultDataTouched,
     getValues,
+    hydratedData?.waves,
     i,
     initialState,
     k,
@@ -46,8 +49,9 @@ export const useClassSelectInput = (
     color: string;
     classId: number | null;
   }) => {
+    setDefaultDataTouched(true);
     if (initialState) {
-      setSelectMenuIsVisible(false);
+      setSelectMenuIsVisible(true);
       if (selectedClasses.length < 4) {
         setSelectedClasses((prevState: ClassInitialState[]) => [
           ...prevState,
@@ -61,6 +65,7 @@ export const useClassSelectInput = (
             color: colors[0],
           },
         ]);
+
         setColors((prevState) => {
           return prevState.slice(1);
         });
@@ -92,10 +97,16 @@ export const useClassSelectInput = (
     { title: 'Ronin', image: '/images/ronin.png', color: '', classId: null },
   ];
   const deleteClassHandler = (classId: number) => {
+    console.log(classId);
     if (initialState) {
+      setDefaultDataTouched(false);
+
+      deleteAllRelatedClass?.(classId);
+
       setSelectedClasses((prevState: ClassInitialState[]) => {
         return prevState.filter((item) => item.classId !== classId);
       });
+
       setColors((prevState) => {
         const deleteColor = selectedClasses?.filter(
           (item) => item.classId === classId
@@ -127,5 +138,7 @@ export const useClassSelectInput = (
     classes,
     getValues,
     setClasses,
+    // hydratedClasses,
+    // hydratedInitial,
   };
 };

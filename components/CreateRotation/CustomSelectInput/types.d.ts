@@ -7,4 +7,5 @@ export type PropsTypes = {
   i?: number;
   k?: number;
   isInitial: boolean;
+  hydratedData?: FormClasses;
 };

@@ -7,8 +7,10 @@ import Head from 'next/head';
 import { useCreateRotation } from 'hooks';
 import { FormProvider } from 'react-hook-form';
 import { NormalInput } from 'components';
+import axios from 'axios';
+import { FormClasses } from 'types/global';
 
-export default function CreateRotation() {
+export default function CreateRotation(props: { data: FormClasses }) {
   const {
     initialStates,
     setInitialStates,
@@ -17,7 +19,16 @@ export default function CreateRotation() {
     onSubmit,
     weeklyModifierOptions,
     dataChanges,
-  } = useCreateRotation();
+    hydratedData,
+    defaultDataTouched,
+    deleteAllRelatedClass,
+    setDefaultDataTouched,
+    enableClassChangeHandler,
+    cancelClassChangeHandler,
+    submitClassChangeHandler,
+    initialClassesSelection,
+    rotationsExist,
+  } = useCreateRotation(props.data);
 
   return (
     <>
@@ -37,53 +48,96 @@ export default function CreateRotation() {
           >
             <>
               <button>submit</button>
-              <div className='flex flex-col lg:flex-row lg:items-end gap-2'>
-                <div className='flex items-end gap-1 lg:mt-4 mb-3 lg:mb-0'>
-                  <ClassSelectInput
-                    initialState={true}
-                    initialStates={initialStates}
-                    setInitialStates={setInitialStates}
-                  />
-                  <CustomSelectInput
-                    options={weeklyModifierOptions}
-                    inputClass={'w-48'}
-                    isInitial={true}
-                  />
+              <div>
+                <div className='pb-8'>
+                  {!initialClassesSelection ? (
+                    <button
+                      type='button'
+                      className='text-sm text-slate-400'
+                      onClick={() => enableClassChangeHandler()}
+                    >
+                      Edit classes
+                    </button>
+                  ) : (
+                    rotationsExist && (
+                      <div className='flex gap-2'>
+                        <button
+                          type='button'
+                          className='text-sm text-rose-600'
+                          onClick={() => cancelClassChangeHandler()}
+                        >
+                          cancel
+                        </button>
+                        <button
+                          type='button'
+                          className='text-sm text-green'
+                          onClick={() => submitClassChangeHandler()}
+                        >
+                          submit
+                        </button>
+                      </div>
+                    )
+                  )}
                 </div>
-                <div className='flex items-start gap-1 h-[4.5rem] lg:items-end'>
-                  <NormalInput
-                    type={'text'}
-                    placeholder={'author'}
-                    label='author'
-                    id={'author'}
-                    inputName={'initialState.author'}
-                  />
 
+                <div className='flex flex-col lg:flex-row lg:items-end gap-2'>
+                  <div className='flex items-end gap-1 lg:mt-4 mb-3 lg:mb-0'>
+                    <ClassSelectInput
+                      initialState={true}
+                      initialStates={initialStates}
+                      setInitialStates={setInitialStates}
+                      hydratedData={hydratedData}
+                      defaultDataTouched={defaultDataTouched}
+                      setDefaultDataTouched={setDefaultDataTouched}
+                      deleteAllRelatedClass={deleteAllRelatedClass}
+                      initialClassesSelection={initialClassesSelection}
+                    />
+                    <CustomSelectInput
+                      options={weeklyModifierOptions}
+                      inputClass={'w-48'}
+                      isInitial={true}
+                      hydratedData={hydratedData}
+                    />
+                  </div>
+                  <div className='flex items-start gap-1 h-[4.5rem] lg:items-end'>
+                    <NormalInput
+                      type={'text'}
+                      placeholder={'author'}
+                      label='author'
+                      id={'author'}
+                      inputName={'initialState.author'}
+                    />
+
+                    <NormalInput
+                      type='text'
+                      placeholder='version'
+                      id='version'
+                      label='version'
+                      registerOptions={{
+                        pattern: {
+                          value: /^[0-9_.-]*$/,
+                          message: 'use only numbers',
+                        },
+                      }}
+                      inputName='initialState.version'
+                      width='w-28'
+                    />
+                  </div>
                   <NormalInput
-                    type='text'
-                    placeholder='version'
-                    id='version'
-                    label='version'
-                    registerOptions={{
-                      pattern: {
-                        value: /^[0-9_.-]*$/,
-                        message: 'use only numbers',
-                      },
-                    }}
-                    inputName='initialState.version'
-                    width='w-28'
+                    type='date'
+                    placeholder='date'
+                    id='date'
+                    label='date'
+                    inputName={'initialState.date'}
                   />
                 </div>
-                <NormalInput
-                  type='date'
-                  placeholder='date'
-                  id='date'
-                  label='date'
-                  inputName={'initialState.date'}
-                />
               </div>
 
-              <ul className='-mt-10'>
+              <ul
+                className={`-mt-10 relative ${
+                  initialClassesSelection && rotationsExist && 'opacity-20'
+                } `}
+              >
                 {Array.from({ length: 16 }, (_, i) => i + 1)?.map((elem, i) => (
                   <li className='mt-4 flex flex-col' key={i}>
                     <h2 className='text-2xl font-ubuntu font-bold mb-1'>
@@ -100,10 +154,16 @@ export default function CreateRotation() {
                             : false
                         }
                         dataChanges={dataChanges}
+                        hydratedData={hydratedData}
+                        defaultDataTouched={defaultDataTouched}
+                        setDefaultDataTouched={setDefaultDataTouched}
                       />
                     </div>
                   </li>
                 ))}
+                {initialClassesSelection && rotationsExist && (
+                  <div className='w-full absolute top-4 h-full' />
+                )}
               </ul>
             </>
           </form>
@@ -112,3 +172,17 @@ export default function CreateRotation() {
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  try {
+    const data = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/test`);
+
+    return {
+      props: {
+        data: data.data,
+      },
+    };
+  } catch (error: any) {
+    console.error(error);
+  }
+};

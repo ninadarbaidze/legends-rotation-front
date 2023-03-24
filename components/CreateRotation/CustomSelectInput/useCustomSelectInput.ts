@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 export const useCustomSelectInput = (
@@ -6,14 +6,9 @@ export const useCustomSelectInput = (
   k: number,
   isInitial: boolean
 ) => {
-  const { setValue, getValues, reset } = useFormContext();
-
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
-
-  // useEffect(() => {
-  //   setSelectedOption(getValues('initialState.weeklyModifier'));
-  // }, [getValues, reset]);
+  const { setValue, getValues } = useFormContext();
 
   const selectOptionHandler = (selectedOption: string) => {
     setSelectedOption(selectedOption);
@@ -31,5 +26,6 @@ export const useCustomSelectInput = (
     setSelectMenuIsVisible,
     selectedOption,
     selectOptionHandler,
+    setSelectedOption,
   };
 };

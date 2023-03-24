@@ -52,6 +52,7 @@ const SpawnComponent: React.FC<Props> = (props) => {
                       i={props.i}
                       k={i + 1}
                       isInitial={false}
+                      hydratedData={props.hydratedData}
                     />
                   </div>
                   <div className='flex flex-col justify-start items-start'>
@@ -61,7 +62,9 @@ const SpawnComponent: React.FC<Props> = (props) => {
                       initialState={false}
                       initialStates={props.initialStates}
                       setInitialStates={props.setInitialStates}
-                      dataChanges={props.dataChanges}
+                      hydratedData={props.hydratedData}
+                      defaultDataTouched={props.defaultDataTouched}
+                      setDefaultDataTouched={props.setDefaultDataTouched}
                     />
                   </div>
                 </div>

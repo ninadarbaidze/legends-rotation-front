@@ -14,6 +14,18 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
     props.isInitial
   );
 
+  // const hydratedSelectedOption = !selectedOption
+  //   ? props.isInitial
+  //     ? props.hydratedData?.initialState?.weeklyModifier
+  //     : props.hydratedData?.waves[props.i][`spawn${props.k}`]
+  //   : selectedOption;
+
+  const hydratedSelectedOption = !selectedOption
+    ? props.isInitial
+      ? props.hydratedData?.initialState?.weeklyModifier
+      : props.hydratedData?.waves[props.i][`spawn${props.k}`].spawnLocation
+    : selectedOption;
+
   return (
     <>
       {selectMenuIsVisible && (
@@ -26,13 +38,15 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
       <div className='font-ubuntu'>
         <div
           className={`${props.inputClass} ${
-            selectedOption ? 'text-grey-700' : 'text-grey-350'
+            hydratedSelectedOption ? 'text-grey-700' : 'text-grey-350'
           } relative pr-32 py-[0.35rem] rounded-md border border-grey-300  font-extralight`}
           onClick={() => setSelectMenuIsVisible(!selectMenuIsVisible)}
         >
-          <p className={`pl-2 w-36 ${selectedOption && 'font-normal'}`}>{`${
-            selectedOption
-              ? selectedOption
+          <p
+            className={`pl-2 w-36 ${hydratedSelectedOption && 'font-normal'}`}
+          >{`${
+            hydratedSelectedOption
+              ? hydratedSelectedOption
               : `Select ${props.placeholder ? props.placeholder : ''}`
           }`}</p>
           <div className=''>
@@ -50,7 +64,9 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
                 onClick={() => selectOptionHandler(option)}
               >
                 <p>{option}</p>
-                {selectedOption === option && <CheckIcon className='w-4' />}
+                {hydratedSelectedOption === option && (
+                  <CheckIcon className='w-4' />
+                )}
               </li>
             ))}
           </ul>

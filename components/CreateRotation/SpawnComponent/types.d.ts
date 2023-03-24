@@ -6,4 +6,7 @@ export type Props = {
   objective: boolean;
   setInitialStates: SetState<ClassInitialState[]>;
   dataChanges: boolean;
+  hydratedData: FormClasses;
+  defaultDataTouched: boolean;
+  setDefaultDataTouched: SetState<boolean>;
 };

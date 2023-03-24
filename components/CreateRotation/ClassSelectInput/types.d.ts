@@ -1,4 +1,4 @@
-import { SetState } from 'types/global';
+import { FormClasses, SetState } from 'types/global';
 
 export type Props = {
   inputClass?: string;
@@ -10,5 +10,9 @@ export type Props = {
   i?: number;
   k?: number;
   labelName?: string;
-  dataChanges?: boolean;
+  hydratedData: FormClasses;
+  initialClassesSelection?: boolean | undefined;
+  defaultDataTouched: boolean;
+  setDefaultDataTouched: SetState<boolean>;
+  deleteAllRelatedClass?: ((arg0: number) => void) | undefined;
 };

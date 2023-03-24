@@ -18,7 +18,10 @@ const ClassSelectInput: React.FC<Props> = (props) => {
     props.setInitialStates,
     props.i as number,
     props.k as number,
-    props.dataChanges
+    props.hydratedData,
+    props.defaultDataTouched,
+    props.setDefaultDataTouched,
+    props.deleteAllRelatedClass
   );
 
   return (
@@ -50,9 +53,12 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                       deleteClassHandler(classes.classId as number)
                     }
                   >
-                    <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
-                      <p className='text-[7px]'> x </p>
-                    </div>
+                    {props.initialClassesSelection && props.initialState && (
+                      <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
+                        <p className='text-[7px]'> x </p>
+                      </div>
+                    )}
+
                     <div className='p-[6px]'>
                       <Image
                         src={`${classes.image}`}
@@ -97,7 +103,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
               ))}
         </ul>
 
-        {true && (
+        {(props.initialClassesSelection || !props.initialState) && (
           <div className='font-ubuntu'>
             <div
               className={`${props.inputClass} ${
