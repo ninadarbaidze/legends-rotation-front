@@ -8,6 +8,7 @@ export type ClassInitialState = {
 };
 
 export type FormClasses = {
+  id: number;
   initialState: {
     author: string;
     initialClasses: ClassInitialState[];

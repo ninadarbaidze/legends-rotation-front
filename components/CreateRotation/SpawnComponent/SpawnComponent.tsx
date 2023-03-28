@@ -4,24 +4,34 @@ import { CustomSelectInput } from '../CustomSelectInput';
 import { ChooseActions, ChooseExtra } from 'components';
 import { useSpawnComponent } from './useSpawnComponent';
 import { Props } from './types';
+import { Controller } from 'react-hook-form';
 
 const SpawnComponent: React.FC<Props> = (props) => {
   const { objectiveOptions, setValue, getValues } = useSpawnComponent();
+  console.log(getValues());
   return (
     <>
       {props.objective && (
         <div className='flex flex-col gap-2 mb-1 justify-start items-start'>
-          <Select
-            closeMenuOnSelect={true}
-            options={objectiveOptions}
-            isMulti={false}
-            onChange={(e) =>
-              setValue(`waves[${props.i}]`, {
-                ...getValues(`waves[${props.i}]`),
-                objective: e,
-              })
-            }
-            placeholder='Select objective . . .       '
+          <Controller
+            name={`waves[${props.i}].objective`}
+            rules={{ required: false }}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                closeMenuOnSelect={true}
+                options={objectiveOptions}
+                isMulti={false}
+                onChange={onChange}
+                placeholder='Select objective . . .       '
+                value={
+                  value
+                    ? objectiveOptions.find(
+                        (action) => action.value === value.name
+                      )
+                    : value
+                }
+              />
+            )}
           />
         </div>
       )}
@@ -68,8 +78,11 @@ const SpawnComponent: React.FC<Props> = (props) => {
                     />
                   </div>
                 </div>
-                <ChooseActions i={props.i} k={i + 1} />
-                <ChooseExtra i={props.i} k={i + 1} />
+                <ChooseActions
+                  i={props.i}
+                  k={i + 1}
+                  hydratedData={props.hydratedData}
+                />
               </div>
             </div>
           </>

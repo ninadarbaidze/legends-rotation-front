@@ -9,6 +9,7 @@ import { FormProvider } from 'react-hook-form';
 import { NormalInput } from 'components';
 import axios from 'axios';
 import { FormClasses } from 'types/global';
+import { GetServerSideProps } from 'next';
 
 export default function CreateRotation(props: { data: FormClasses }) {
   const {
@@ -173,16 +174,29 @@ export default function CreateRotation(props: { data: FormClasses }) {
   );
 }
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const token = context.query.token;
   try {
-    const data = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/test`);
+    if (token) {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/rotations/${token}`
+      );
 
-    return {
-      props: {
-        data: data.data,
-      },
-    };
+      return {
+        props: {
+          data: data.data,
+        },
+      };
+    } else {
+      return {
+        props: {
+          data: {},
+        },
+      };
+    }
   } catch (error: any) {
-    console.error(error);
+    return {
+      notFound: true,
+    };
   }
 };

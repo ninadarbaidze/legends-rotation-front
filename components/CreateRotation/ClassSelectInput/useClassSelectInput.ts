@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ClassInitialState, FormClasses, SetState } from 'types/global';
@@ -17,6 +18,8 @@ export const useClassSelectInput = (
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
   const [classes, setClasses] = useState<ClassInitialState[]>([]);
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
+  const { query } = useRouter();
+  const rotationExists = query.token;
 
   useEffect(() => {
     if (initialState) {
@@ -26,10 +29,6 @@ export const useClassSelectInput = (
         ...getValues(`waves[${i}].spawn${k}`),
         selectedOptions: classes,
       });
-      !defaultDataTouched &&
-        setClasses(
-          (hydratedData?.waves[i] as any)[`spawn${k}`]?.selectedOptions
-        );
     }
   }, [
     classes,
@@ -39,9 +38,17 @@ export const useClassSelectInput = (
     i,
     initialState,
     k,
+    rotationExists,
     selectedClasses,
     setValue,
   ]);
+
+  useEffect(() => {
+    rotationExists &&
+      setClasses(
+        (hydratedData?.waves[i] as any)?.[`spawn${k}`]?.selectedOptions
+      );
+  }, [hydratedData?.waves, i, k, rotationExists]);
 
   const selectOptionHandler = (selectedOption: {
     title: string;
@@ -97,7 +104,6 @@ export const useClassSelectInput = (
     { title: 'Ronin', image: '/images/ronin.png', color: '', classId: null },
   ];
   const deleteClassHandler = (classId: number) => {
-    console.log(classId);
     if (initialState) {
       setDefaultDataTouched(false);
 
@@ -115,6 +121,8 @@ export const useClassSelectInput = (
         return prevState;
       });
     } else {
+      console.log(classId);
+
       setClasses((prevState: ClassInitialState[]) => {
         return prevState.filter((item) => item.classId !== classId);
       });

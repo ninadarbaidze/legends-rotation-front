@@ -2,16 +2,43 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ClassInitialState, FormClasses } from 'types/global';
 
 export const useCreateRotation = (dataa: FormClasses) => {
+  const router = useRouter();
+  const rotationsExist = !!router.query.token;
+
   const { data } = useQuery('all-rotations', () => {
-    return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/test`);
+    if (rotationsExist)
+      return axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/rotations/${router.query.token}`
+      );
+  });
+  const queryClient = useQueryClient();
+
+  const createRotation = async (data: FormClasses) => {
+    const { data: response } = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/rotations/${dataa?.id}`,
+      data
+    );
+    return response.data;
+  };
+
+  const { mutate, isLoading } = useMutation(createRotation, {
+    onSuccess: (data) => {
+      console.log(data);
+      const message = 'success';
+      alert(message);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('create');
+    },
   });
 
-  const router = useRouter();
-  const rotationsExist = !!router.query.data;
   const [defaultDataTouched, setDefaultDataTouched] = useState(rotationsExist);
 
   const [hydratedData, setData] = useState(dataa);
@@ -66,7 +93,6 @@ export const useCreateRotation = (dataa: FormClasses) => {
             actions: [],
             checkbox: [],
             selectedOptions: [],
-            extra: [],
             objective: '',
           },
           spawn2: {
@@ -74,7 +100,6 @@ export const useCreateRotation = (dataa: FormClasses) => {
             actions: [],
             checkbox: [],
             selectedOptions: [],
-            extra: [],
             objective: '',
           },
           spawn3: {
@@ -82,7 +107,6 @@ export const useCreateRotation = (dataa: FormClasses) => {
             actions: [],
             checkbox: [],
             selectedOptions: [],
-            extra: [],
             objective: '',
           },
         })),
@@ -98,7 +122,7 @@ export const useCreateRotation = (dataa: FormClasses) => {
       setInitialStates(data?.data.initialState.initialClasses);
       setData(data?.data);
     }
-  }, [data?.data, form, rotationsExist, router.query.data]);
+  }, [data?.data, form, rotationsExist, router.query.token]);
 
   const options = ['beach', 'stable', 'farm'];
   const [dataChanges, setDataChanged] = useState(false);
@@ -107,7 +131,7 @@ export const useCreateRotation = (dataa: FormClasses) => {
   const onSubmit = (data: FormClasses) => {
     try {
       setDataChanged(true);
-      console.log('submitted data', {
+      const formData = {
         initialState: data.initialState,
         waves: data.waves.map((wave) => ({
           ...wave,
@@ -136,7 +160,11 @@ export const useCreateRotation = (dataa: FormClasses) => {
             ),
           },
         })),
-      });
+      };
+
+      mutate(formData);
+
+      console.log('submitted data', formData);
     } catch (err: any) {
       console.log(err);
     }

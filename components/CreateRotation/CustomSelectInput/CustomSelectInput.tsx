@@ -7,24 +7,15 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
     selectMenuIsVisible,
     setSelectMenuIsVisible,
     selectOptionHandler,
-    selectedOption,
+    hydratedSelectedOption,
   } = useCustomSelectInput(
     props.i as number,
     props.k as number,
-    props.isInitial
+    props.isInitial,
+    props.hydratedData
   );
 
-  // const hydratedSelectedOption = !selectedOption
-  //   ? props.isInitial
-  //     ? props.hydratedData?.initialState?.weeklyModifier
-  //     : props.hydratedData?.waves[props.i][`spawn${props.k}`]
-  //   : selectedOption;
-
-  const hydratedSelectedOption = !selectedOption
-    ? props.isInitial
-      ? props.hydratedData?.initialState?.weeklyModifier
-      : props.hydratedData?.waves[props.i][`spawn${props.k}`].spawnLocation
-    : selectedOption;
+  console.log(hydratedSelectedOption);
 
   return (
     <>
