@@ -8,7 +8,7 @@ import { Controller } from 'react-hook-form';
 
 const SpawnComponent: React.FC<Props> = (props) => {
   const { objectiveOptions, setValue, getValues } = useSpawnComponent();
-  console.log(getValues());
+
   return (
     <>
       {props.objective && (

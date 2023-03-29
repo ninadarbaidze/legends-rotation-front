@@ -10,6 +10,7 @@ import { NormalInput } from 'components';
 import axios from 'axios';
 import { FormClasses } from 'types/global';
 import { GetServerSideProps } from 'next';
+import { getRotationByToken } from 'services';
 
 export default function CreateRotation(props: { data: FormClasses }) {
   const {
@@ -29,6 +30,7 @@ export default function CreateRotation(props: { data: FormClasses }) {
     submitClassChangeHandler,
     initialClassesSelection,
     rotationsExist,
+    data,
   } = useCreateRotation(props.data);
 
   return (
@@ -176,27 +178,25 @@ export default function CreateRotation(props: { data: FormClasses }) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = context.query.token;
-  try {
-    if (token) {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/rotations/${token}`
-      );
-
-      return {
-        props: {
-          data: data.data,
-        },
-      };
-    } else {
-      return {
-        props: {
-          data: {},
-        },
-      };
-    }
-  } catch (error: any) {
+  // try {
+  if (token) {
+    const data = await getRotationByToken(token as string);
     return {
-      notFound: true,
+      props: {
+        data: data,
+      },
     };
+  } else {
+    return {
+      props: {
+        data: {},
+      },
+    };
+    // }
+    // } catch (error: any) {
+    // return {
+    //   notFound: true,
+    // };
+    // }
   }
 };

@@ -1,47 +1,22 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { createRotation } from 'services';
 import { ClassInitialState, FormClasses } from 'types/global';
+import { useMutateHook } from './useMutateHook';
 
-export const useCreateRotation = (dataa: FormClasses) => {
+export const useCreateRotation = (rotationData: FormClasses) => {
   const router = useRouter();
   const rotationsExist = !!router.query.token;
 
-  const { data } = useQuery('all-rotations', () => {
-    if (rotationsExist)
-      return axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/rotations/${router.query.token}`
-      );
-  });
-  const queryClient = useQueryClient();
-
-  const createRotation = async (data: FormClasses) => {
-    const { data: response } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/rotations/${dataa?.id}`,
-      data
-    );
-    return response.data;
-  };
-
-  const { mutate, isLoading } = useMutation(createRotation, {
-    onSuccess: (data) => {
-      console.log(data);
-      const message = 'success';
-      alert(message);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries('create');
-    },
-  });
+  const { mutate } = useMutateHook(
+    () => createRotation(rotationData),
+    'create-rotation'
+  );
 
   const [defaultDataTouched, setDefaultDataTouched] = useState(rotationsExist);
 
-  const [hydratedData, setData] = useState(dataa);
+  const [hydratedData, setData] = useState(rotationData);
   const [initialClassesSelection, setInitialClassesSelection] = useState(
     !rotationsExist
   );
@@ -117,12 +92,12 @@ export const useCreateRotation = (dataa: FormClasses) => {
 
   useEffect(() => {
     if (rotationsExist) {
-      form.reset(data?.data);
+      form.reset(rotationData);
       setDefaultDataTouched(false);
-      setInitialStates(data?.data.initialState.initialClasses);
-      setData(data?.data);
+      setInitialStates(rotationData.initialState.initialClasses);
+      setData(rotationData);
     }
-  }, [data?.data, form, rotationsExist, router.query.token]);
+  }, [rotationData, form, rotationsExist, router.query.token]);
 
   const options = ['beach', 'stable', 'farm'];
   const [dataChanges, setDataChanged] = useState(false);
