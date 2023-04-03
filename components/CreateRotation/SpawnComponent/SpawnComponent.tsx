@@ -1,14 +1,12 @@
 import Select from 'react-select';
 import { ClassSelectInput } from '../ClassSelectInput';
 import { CustomSelectInput } from '../CustomSelectInput';
-import { ChooseActions, ChooseExtra } from 'components';
-import { useSpawnComponent } from './useSpawnComponent';
+import { ChooseActions } from 'components';
 import { Props } from './types';
 import { Controller } from 'react-hook-form';
+import { objectiveOptions } from 'utils';
 
 const SpawnComponent: React.FC<Props> = (props) => {
-  const { objectiveOptions, setValue, getValues } = useSpawnComponent();
-
   return (
     <>
       {props.objective && (
@@ -19,6 +17,7 @@ const SpawnComponent: React.FC<Props> = (props) => {
             render={({ field: { onChange, value } }) => (
               <Select
                 closeMenuOnSelect={true}
+                key={value}
                 options={objectiveOptions}
                 isMulti={false}
                 onChange={onChange}
@@ -37,12 +36,10 @@ const SpawnComponent: React.FC<Props> = (props) => {
       )}
 
       <div className='flex flex-col lg:flex-row gap-1 border-2 rounded-lg shadow-md'>
-        {Array.from({ length: 3 }, (_, i) => {
-          i + 1;
-        })?.map((elem, i) => (
+        {Array.from(Array(3).keys()).map((elem, i) => (
           <>
             <div
-              key={objectiveOptions[i].value}
+              key={elem + i}
               className='flex flex-col gap-2 lg:w-1/3 2xl:gap-4 px-4 py-2 2xl:py-6 font-ubuntu border-b border-zinc-300 2xl:border-r 2xl:border-zinc-300'
             >
               <h2 className='font-bold text-lg'>Spawn {i + 1}</h2>
@@ -75,6 +72,7 @@ const SpawnComponent: React.FC<Props> = (props) => {
                       hydratedData={props.hydratedData}
                       defaultDataTouched={props.defaultDataTouched}
                       setDefaultDataTouched={props.setDefaultDataTouched}
+                      initialClassesIsDeleted={props.initialClassesIsDeleted}
                     />
                   </div>
                 </div>

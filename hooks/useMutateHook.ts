@@ -3,8 +3,8 @@ import { isError, useMutation, useQueryClient } from 'react-query';
 export const useMutateHook = (
   mutationFunction: <T, M>(arg: T) => Promise<M>,
   query: string,
-  successHandler?: <T, M>(args: T) => M,
-  mutationHandler?: <T, M>(args: T) => M
+  successHandler?: (arg0: any) => void,
+  mutationHandler?: <T, M>(args: T) => M | void
 ) => {
   const queryClient = useQueryClient();
 

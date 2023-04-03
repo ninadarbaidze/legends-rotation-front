@@ -12,14 +12,18 @@ export const useClassSelectInput = (
   hydratedData: FormClasses,
   defaultDataTouched: boolean,
   setDefaultDataTouched: SetState<boolean>,
-  deleteAllRelatedClass?: (arg0: number) => void
+  initialClassesIsDeleted?: boolean | undefined,
+  deleteAllRelatedClass?: (
+    classId: number,
+    isRotationCreatedFromScratch: boolean
+  ) => void | undefined
 ) => {
   const { setValue, getValues } = useFormContext();
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
   const [classes, setClasses] = useState<ClassInitialState[]>([]);
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
   const { query } = useRouter();
-  const rotationExists = query.token;
+  const rotationExists = !!query.rotationId;
 
   useEffect(() => {
     if (initialState) {
@@ -48,7 +52,14 @@ export const useClassSelectInput = (
       setClasses(
         (hydratedData?.waves[i] as any)?.[`spawn${k}`]?.selectedOptions
       );
-  }, [hydratedData?.waves, i, k, rotationExists]);
+  }, [hydratedData, i, k, rotationExists, initialClassesIsDeleted]);
+
+  useEffect(() => {
+    hydratedData.waves &&
+      setClasses(
+        (hydratedData?.waves[i] as any)?.[`spawn${k}`]?.selectedOptions
+      );
+  }, [initialClassesIsDeleted]);
 
   const selectOptionHandler = (selectedOption: {
     title: string;
@@ -103,11 +114,11 @@ export const useClassSelectInput = (
     },
     { title: 'Ronin', image: '/images/ronin.png', color: '', classId: null },
   ];
+
   const deleteClassHandler = (classId: number) => {
     if (initialState) {
       setDefaultDataTouched(false);
-
-      deleteAllRelatedClass?.(classId);
+      deleteAllRelatedClass?.(classId, true);
 
       setSelectedClasses((prevState: ClassInitialState[]) => {
         return prevState.filter((item) => item.classId !== classId);
@@ -121,8 +132,6 @@ export const useClassSelectInput = (
         return prevState;
       });
     } else {
-      console.log(classId);
-
       setClasses((prevState: ClassInitialState[]) => {
         return prevState.filter((item) => item.classId !== classId);
       });

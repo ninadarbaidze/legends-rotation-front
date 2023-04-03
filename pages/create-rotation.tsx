@@ -7,10 +7,9 @@ import Head from 'next/head';
 import { useCreateRotation } from 'hooks';
 import { FormProvider } from 'react-hook-form';
 import { NormalInput } from 'components';
-import axios from 'axios';
 import { FormClasses } from 'types/global';
 import { GetServerSideProps } from 'next';
-import { getRotationByToken } from 'services';
+import { getRotationByRotationId } from 'services';
 
 export default function CreateRotation(props: { data: FormClasses }) {
   const {
@@ -25,12 +24,9 @@ export default function CreateRotation(props: { data: FormClasses }) {
     defaultDataTouched,
     deleteAllRelatedClass,
     setDefaultDataTouched,
-    enableClassChangeHandler,
-    cancelClassChangeHandler,
-    submitClassChangeHandler,
     initialClassesSelection,
     rotationsExist,
-    data,
+    initialClassesIsDeleted,
   } = useCreateRotation(props.data);
 
   return (
@@ -52,37 +48,6 @@ export default function CreateRotation(props: { data: FormClasses }) {
             <>
               <button>submit</button>
               <div>
-                <div className='pb-8'>
-                  {!initialClassesSelection ? (
-                    <button
-                      type='button'
-                      className='text-sm text-slate-400'
-                      onClick={() => enableClassChangeHandler()}
-                    >
-                      Edit classes
-                    </button>
-                  ) : (
-                    rotationsExist && (
-                      <div className='flex gap-2'>
-                        <button
-                          type='button'
-                          className='text-sm text-rose-600'
-                          onClick={() => cancelClassChangeHandler()}
-                        >
-                          cancel
-                        </button>
-                        <button
-                          type='button'
-                          className='text-sm text-green'
-                          onClick={() => submitClassChangeHandler()}
-                        >
-                          submit
-                        </button>
-                      </div>
-                    )
-                  )}
-                </div>
-
                 <div className='flex flex-col lg:flex-row lg:items-end gap-2'>
                   <div className='flex items-end gap-1 lg:mt-4 mb-3 lg:mb-0'>
                     <ClassSelectInput
@@ -126,13 +91,39 @@ export default function CreateRotation(props: { data: FormClasses }) {
                       width='w-28'
                     />
                   </div>
-                  <NormalInput
-                    type='date'
-                    placeholder='date'
-                    id='date'
-                    label='date'
-                    inputName={'initialState.date'}
-                  />
+                  <div className='flex items-center gap-2'>
+                    <NormalInput
+                      type='date'
+                      placeholder='date'
+                      id='date'
+                      label='date'
+                      inputName={'initialState.date'}
+                    />
+                    <div className='flex flex-col'>
+                      <p>Is rotation public?</p>
+                      <div className='flex gap-4  py-[0.35rem]'>
+                        <label htmlFor='yes' className='flex gap-1'>
+                          <input
+                            {...form.register('initialState.isPublic')}
+                            type='radio'
+                            value='yes'
+                            id='yes'
+                          />
+                          yes
+                        </label>
+                        <label htmlFor='no' className='flex gap-1'>
+                          <input
+                            {...form.register('initialState.isPublic')}
+                            type='radio'
+                            value='no'
+                            id='no'
+                            defaultChecked={true}
+                          />
+                          no
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -141,8 +132,8 @@ export default function CreateRotation(props: { data: FormClasses }) {
                   initialClassesSelection && rotationsExist && 'opacity-20'
                 } `}
               >
-                {Array.from({ length: 16 }, (_, i) => i + 1)?.map((elem, i) => (
-                  <li className='mt-4 flex flex-col' key={i}>
+                {Array.from(Array(16).keys())?.map((elem, i) => (
+                  <li className='mt-4 flex flex-col' key={elem + i}>
                     <h2 className='text-2xl font-ubuntu font-bold mb-1'>
                       Waves {i}
                     </h2>
@@ -157,6 +148,7 @@ export default function CreateRotation(props: { data: FormClasses }) {
                             : false
                         }
                         dataChanges={dataChanges}
+                        initialClassesIsDeleted={initialClassesIsDeleted}
                         hydratedData={hydratedData}
                         defaultDataTouched={defaultDataTouched}
                         setDefaultDataTouched={setDefaultDataTouched}
@@ -177,26 +169,25 @@ export default function CreateRotation(props: { data: FormClasses }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const token = context.query.token;
-  // try {
-  if (token) {
-    const data = await getRotationByToken(token as string);
+  const rotationId = context.query.rotationId;
+  try {
+    if (rotationId) {
+      const data = await getRotationByRotationId(rotationId as string);
+      return {
+        props: {
+          data: data,
+        },
+      };
+    } else {
+      return {
+        props: {
+          data: {},
+        },
+      };
+    }
+  } catch (error: any) {
     return {
-      props: {
-        data: data,
-      },
+      notFound: true,
     };
-  } else {
-    return {
-      props: {
-        data: {},
-      },
-    };
-    // }
-    // } catch (error: any) {
-    // return {
-    //   notFound: true,
-    // };
-    // }
   }
 };

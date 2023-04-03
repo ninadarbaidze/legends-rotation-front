@@ -9,4 +9,5 @@ export type Props = {
   hydratedData: FormClasses;
   defaultDataTouched: boolean;
   setDefaultDataTouched: SetState<boolean>;
+  initialClassesIsDeleted: boolean;
 };

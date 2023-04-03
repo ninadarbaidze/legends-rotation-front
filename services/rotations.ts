@@ -2,13 +2,15 @@ import { axios } from 'services';
 import { FormClasses } from 'types/global';
 
 export const createRotation = async (data: FormClasses) => {
-  const { data: response } = await axios.post(`/rotations/${data.id}`, data);
-  return response.data;
+  const { data: response } = await axios.post(`/rotations`, data, {
+    params: { id: data?.id },
+  });
+  return response;
 };
-export const getRotationByToken = async (token: string | boolean) => {
+export const getRotationByRotationId = async (rotationId: string | boolean) => {
   let response;
-  if (token) {
-    response = await axios.get(`/rotations/${token}`);
+  if (rotationId) {
+    response = await axios.get(`/rotations/${rotationId}`);
     return response.data;
   }
 };

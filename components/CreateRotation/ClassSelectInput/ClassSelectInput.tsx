@@ -3,6 +3,7 @@ import { useClassSelectInput } from './useClassSelectInput';
 import { Props } from './types';
 import Image from 'next/image';
 import { ClassInitialState } from 'types/global';
+import { getClassColor } from 'helpers';
 
 const ClassSelectInput: React.FC<Props> = (props) => {
   const {
@@ -21,6 +22,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
     props.hydratedData,
     props.defaultDataTouched,
     props.setDefaultDataTouched,
+    props.initialClassesIsDeleted,
     props.deleteAllRelatedClass
   );
 
@@ -53,7 +55,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                       deleteClassHandler(classes.classId as number)
                     }
                   >
-                    {props.initialClassesSelection && props.initialState && (
+                    {props.initialState && (
                       <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
                         <p className='text-[7px]'> x </p>
                       </div>
@@ -70,19 +72,13 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                   </li>
                 </>
               ))
-            : classes?.map((classes) => (
+            : classes?.map((classes, i) => (
                 <>
                   <li
-                    className={`${
-                      classes.color === 'red'
-                        ? 'bg-red2'
-                        : classes.color === 'blue'
-                        ? 'bg-blue'
-                        : classes.color === 'green'
-                        ? 'bg-green'
-                        : 'bg-black'
-                    } relative w-8 h-8 rounded-full`}
-                    key={classes.classId}
+                    className={`${getClassColor(
+                      classes.color
+                    )} relative w-8 h-8 rounded-full`}
+                    key={`${classes.classId}${i}`}
                     onClick={() =>
                       deleteClassHandler(classes.classId as number)
                     }
@@ -124,9 +120,9 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                 className={`${props.inputClass} overflow-y-auto absolute z-30 bg-white w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight`}
               >
                 {props.initialState ? (
-                  options?.map((option) => (
+                  options?.map((option, i) => (
                     <li
-                      key={option.title}
+                      key={option.classId! + i}
                       className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
                       onClick={() => selectOptionHandler(option)}
                     >
@@ -152,15 +148,9 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                       >
                         <p>{option.title}</p>
                         <div
-                          className={`${
-                            option.color === 'red'
-                              ? 'bg-red2'
-                              : option.color === 'blue'
-                              ? 'bg-blue'
-                              : option.color === 'green'
-                              ? 'bg-green'
-                              : 'bg-black'
-                          } w-2 h-2 rounded-full border border-white`}
+                          className={`${getClassColor(
+                            option.color
+                          )} w-2 h-2 rounded-full border border-white`}
                         />
                       </li>
                     ))

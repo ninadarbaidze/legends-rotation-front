@@ -14,5 +14,9 @@ export type Props = {
   initialClassesSelection?: boolean | undefined;
   defaultDataTouched: boolean;
   setDefaultDataTouched: SetState<boolean>;
-  deleteAllRelatedClass?: ((arg0: number) => void) | undefined;
+  deleteAllRelatedClass?: (
+    classId: number,
+    isRotationCreatedFromScratch: boolean
+  ) => void | undefined;
+  initialClassesIsDeleted?: boolean | undefined;
 };

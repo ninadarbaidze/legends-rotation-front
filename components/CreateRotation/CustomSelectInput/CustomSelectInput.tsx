@@ -15,8 +15,6 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
     props.hydratedData
   );
 
-  console.log(hydratedSelectedOption);
-
   return (
     <>
       {selectMenuIsVisible && (

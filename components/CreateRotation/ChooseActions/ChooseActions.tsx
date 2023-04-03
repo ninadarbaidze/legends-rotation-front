@@ -1,18 +1,15 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
+import { actionOptions } from 'utils';
 import { Props } from './types';
 import { useChooseActions } from './useChooseActions';
 
 const ChooseActions: React.FC<Props> = (props) => {
-  const {
-    getValues,
-    setValue,
-    showActions,
-    setShowActions,
-    actionOptions,
-    isActionsExists,
-  } = useChooseActions(props.i, props.k);
+  const { showActions, setShowActions, isActionsExists } = useChooseActions(
+    props.i,
+    props.k
+  );
   return (
     <div className='mt-2'>
       <div

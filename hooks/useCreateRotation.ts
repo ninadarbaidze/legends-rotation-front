@@ -1,92 +1,40 @@
+import { getRotationDefaultData } from 'helpers';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { createRotation } from 'services';
 import { ClassInitialState, FormClasses } from 'types/global';
 import { useMutateHook } from './useMutateHook';
 
 export const useCreateRotation = (rotationData: FormClasses) => {
+  console.log(rotationData);
   const router = useRouter();
-  const rotationsExist = !!router.query.token;
-
-  const { mutate } = useMutateHook(
-    () => createRotation(rotationData),
-    'create-rotation'
-  );
+  const rotationsExist = !!router.query.rotationId;
 
   const [defaultDataTouched, setDefaultDataTouched] = useState(rotationsExist);
-
   const [hydratedData, setData] = useState(rotationData);
   const [initialClassesSelection, setInitialClassesSelection] = useState(
     !rotationsExist
   );
+  const [initialClassesIsDeleted, setInitialClassesIsDeleted] = useState(false);
+  // const [newRotationId, setNewRotationId] = useState<number | null>(null);
 
-  const deleteAllRelatedClass = (classId: number) => {
-    setData((prev) => {
-      return {
-        ...prev,
-        waves: prev?.waves.map((wave) => ({
-          ...wave,
-          spawn1: {
-            ...wave.spawn1,
-            selectedOptions: wave.spawn1?.selectedOptions?.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-          spawn2: {
-            ...wave.spawn1,
-            selectedOptions: wave.spawn1?.selectedOptions?.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-          spawn3: {
-            ...wave.spawn1,
-            selectedOptions: wave.spawn1?.selectedOptions?.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-        })),
-      };
-    });
+  const successMutationHandler = (response: {
+    message: string;
+    rotationId: number;
+  }) => {
+    // setNewRotationId(response.rotationId);
+    router.push(`/rotation/${response.rotationId}`);
   };
 
+  const { mutate } = useMutateHook(
+    () => createRotation(form.getValues()),
+    'create-rotation',
+    successMutationHandler
+  );
+
   const form = useForm<FormClasses>({
-    defaultValues: {
-      initialState: {
-        author: '',
-        date: '',
-        version: '',
-        weeklyModifier: '',
-        initialClasses: [],
-      },
-      waves: [
-        ...Array.from({ length: 16 }, (_, i) => {
-          i + 1;
-        })?.map(() => ({
-          spawn1: {
-            spawnLocation: '',
-            actions: [],
-            checkbox: [],
-            selectedOptions: [],
-            objective: '',
-          },
-          spawn2: {
-            spawnLocation: '',
-            actions: [],
-            checkbox: [],
-            selectedOptions: [],
-            objective: '',
-          },
-          spawn3: {
-            spawnLocation: '',
-            actions: [],
-            checkbox: [],
-            selectedOptions: [],
-            objective: '',
-          },
-        })),
-      ],
-    },
+    defaultValues: useMemo(() => getRotationDefaultData(), []),
   });
   const [initialStates, setInitialStates] = useState<ClassInitialState[]>([]);
 
@@ -97,10 +45,72 @@ export const useCreateRotation = (rotationData: FormClasses) => {
       setInitialStates(rotationData.initialState.initialClasses);
       setData(rotationData);
     }
-  }, [rotationData, form, rotationsExist, router.query.token]);
+  }, [rotationData, form, rotationsExist, router.query.rotationId]);
 
   const options = ['beach', 'stable', 'farm'];
   const [dataChanges, setDataChanged] = useState(false);
+
+  const deleteAllRelatedClass = (
+    classId: number,
+    isRotationCreatedFromScratch: boolean
+  ) => {
+    if (isRotationCreatedFromScratch) {
+      setData({
+        ...form.getValues(),
+        waves: form.getValues()?.waves.map((wave) => ({
+          ...wave,
+          spawn1: {
+            ...wave.spawn1,
+            selectedOptions: wave.spawn1?.selectedOptions.filter(
+              (spawnClass) => spawnClass.classId !== classId
+            ),
+          },
+          spawn2: {
+            ...wave.spawn2,
+            selectedOptions: wave.spawn2?.selectedOptions.filter(
+              (spawnClass) => spawnClass.classId !== classId
+            ),
+          },
+          spawn3: {
+            ...wave.spawn3,
+            selectedOptions: wave.spawn3?.selectedOptions.filter(
+              (spawnClass) => spawnClass.classId !== classId
+            ),
+          },
+        })),
+      });
+      setInitialClassesIsDeleted(!initialClassesIsDeleted);
+    } else {
+      setData(form.getValues());
+      setInitialClassesSelection(false);
+      setData({
+        ...form.getValues(),
+        waves: form.getValues()?.waves.map((wave) => ({
+          ...wave,
+          spawn1: {
+            ...wave.spawn1,
+            selectedOptions: wave.spawn1?.selectedOptions?.filter(
+              (spawnClass) => spawnClass.classId !== classId
+            ),
+          },
+          spawn2: {
+            ...wave.spawn2,
+            selectedOptions: wave.spawn2?.selectedOptions?.filter(
+              (spawnClass) => spawnClass.classId !== classId
+            ),
+          },
+          spawn3: {
+            ...wave.spawn3,
+            selectedOptions: wave.spawn3?.selectedOptions?.filter(
+              (spawnClass) => spawnClass.classId !== classId
+            ),
+          },
+        })),
+      });
+    }
+  };
+  console.log('sds', form.getValues());
+
   const { handleSubmit } = form;
 
   const onSubmit = (data: FormClasses) => {
@@ -145,18 +155,6 @@ export const useCreateRotation = (rotationData: FormClasses) => {
     }
   };
 
-  const enableClassChangeHandler = () => {
-    setInitialClassesSelection(true);
-  };
-
-  const cancelClassChangeHandler = () => {
-    setInitialClassesSelection(false);
-  };
-  const submitClassChangeHandler = () => {
-    setData(form.getValues());
-    setInitialClassesSelection(false);
-  };
-
   const weeklyModifierOptions = [
     'stat. eff. immunity',
     'reduced healing',
@@ -178,10 +176,8 @@ export const useCreateRotation = (rotationData: FormClasses) => {
     defaultDataTouched,
     setDefaultDataTouched,
     deleteAllRelatedClass,
-    enableClassChangeHandler,
-    cancelClassChangeHandler,
-    submitClassChangeHandler,
     initialClassesSelection,
     rotationsExist,
+    initialClassesIsDeleted,
   };
 };
