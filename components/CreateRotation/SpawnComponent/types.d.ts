@@ -10,4 +10,6 @@ export type Props = {
   defaultDataTouched: boolean;
   setDefaultDataTouched: SetState<boolean>;
   initialClassesIsDeleted: boolean;
+  spawnLocations: string[];
+  spawnMapChanges?: boolean;
 };

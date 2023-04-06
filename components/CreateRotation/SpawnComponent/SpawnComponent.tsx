@@ -48,18 +48,13 @@ const SpawnComponent: React.FC<Props> = (props) => {
                   <div className='flex flex-col gap-2 justify-start items-start'>
                     <p>Spawn location</p>
                     <CustomSelectInput
-                      options={[
-                        'Boat',
-                        'Beach',
-                        'Forest R (cliff)',
-                        'Forest M (cliff)',
-                        'Hut (cliff)',
-                      ]}
+                      options={props.spawnLocations}
                       inputClass={'w-40'}
                       i={props.i}
                       k={i + 1}
                       isInitial={false}
                       hydratedData={props.hydratedData}
+                      spawnMapChanges={props.spawnMapChanges}
                     />
                   </div>
                   <div className='flex flex-col justify-start items-start'>

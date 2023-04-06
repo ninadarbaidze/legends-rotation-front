@@ -19,6 +19,16 @@ export type FormClasses = {
     isPublic: boolean;
   };
   waves: Wave[];
+  weeklyMap?:
+    | {
+        value: number | null;
+        label: string;
+        mapId: number | null;
+        id?: number;
+        title?: string;
+      }
+    | undefined;
+  weeklyMapId?: number;
 };
 
 export type Wave = {

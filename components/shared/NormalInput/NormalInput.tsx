@@ -7,7 +7,7 @@ import { getErrorMessage } from 'helpers';
 const NormalInput: React.FC<Props> = (props) => {
   const { register, errors } = useNormalInput();
   return (
-    <div className={`${props.width} w-48 font-ubuntu flex flex-col`}>
+    <div className={`${props.width} relative w-48 font-ubuntu flex flex-col`}>
       <label htmlFor={props.id}>{props.label}</label>
       <input
         id={props.id}
@@ -20,7 +20,8 @@ const NormalInput: React.FC<Props> = (props) => {
         {...register(props.inputName, props.registerOptions)}
         placeholder={props.placeholder}
       />
-      <div className='text-red2 text-sm'>
+
+      <div className='absolute top-14 text-red2 text-xs pt-2'>
         <ErrorMessage name={props.inputName} errors={errors} />
       </div>
     </div>

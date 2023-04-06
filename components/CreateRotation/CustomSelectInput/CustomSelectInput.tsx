@@ -12,7 +12,8 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
     props.i as number,
     props.k as number,
     props.isInitial,
-    props.hydratedData
+    props.hydratedData,
+    props.spawnMapChanges
   );
 
   return (

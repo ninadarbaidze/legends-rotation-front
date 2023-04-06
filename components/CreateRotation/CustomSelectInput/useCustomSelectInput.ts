@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FormClasses } from 'types/global';
 
@@ -6,7 +6,8 @@ export const useCustomSelectInput = (
   i: number,
   k: number,
   isInitial: boolean,
-  hydratedData?: FormClasses
+  hydratedData?: FormClasses,
+  spawnMapChanges?: boolean
 ) => {
   const [selectMenuIsVisible, setSelectMenuIsVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -30,6 +31,14 @@ export const useCustomSelectInput = (
         ? hydratedData?.initialState?.weeklyModifier
         : hydratedData?.waves[i][`spawn${k}`].spawnLocation
       : selectedOption;
+
+  useEffect(() => {
+    setValue(`waves[${i}].spawn${k}`, {
+      ...getValues(`waves[${i}].spawn${k}`),
+      spawnLocation: '',
+    });
+    setSelectedOption('');
+  }, [spawnMapChanges]);
 
   return {
     selectMenuIsVisible,

@@ -19,5 +19,5 @@ export const useRotation = () => {
     setRotation(data);
   }, [data]);
 
-  return { rotation };
+  return { rotation, router };
 };

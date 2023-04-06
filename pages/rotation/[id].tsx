@@ -4,10 +4,9 @@ import Head from 'next/head';
 import React from 'react';
 import Image from 'next/image';
 import { SpawnMap } from 'components';
-import { objectiveOptions } from 'utils';
 
 const Rotation = () => {
-  const { rotation } = useRotation();
+  const { rotation, router } = useRotation();
   return (
     <>
       <Head>
@@ -55,7 +54,10 @@ const Rotation = () => {
           </div>
           <div className='flex justify-between text-zinc-400 text-[10px]'>
             <p>{rotation?.initialState?.weeklyModifier}</p>
-            <p>{getMonthAndYear(rotation?.initialState?.date as string)}</p>
+            <p>
+              {rotation?.initialState?.date &&
+                getMonthAndYear(rotation?.initialState?.date as string)}
+            </p>
           </div>
         </header>
         <div>
@@ -70,6 +72,14 @@ const Rotation = () => {
             ))}
           </ul>
         </div>
+        <button
+          className='mt-8 text-sm rounded-md border border-zinc-400 px-2 py-1'
+          onClick={() =>
+            router.push(`/create-rotation?rotationId=${rotation?.id}`)
+          }
+        >
+          Edit rotation
+        </button>
       </div>
     </>
   );

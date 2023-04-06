@@ -2,12 +2,11 @@ import { getRotationDefaultData } from 'helpers';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { createRotation } from 'services';
+import { createRotation, getLocationsBasedOnWeeklyMap } from 'services';
 import { ClassInitialState, FormClasses } from 'types/global';
 import { useMutateHook } from './useMutateHook';
 
 export const useCreateRotation = (rotationData: FormClasses) => {
-  console.log(rotationData);
   const router = useRouter();
   const rotationsExist = !!router.query.rotationId;
 
@@ -17,13 +16,13 @@ export const useCreateRotation = (rotationData: FormClasses) => {
     !rotationsExist
   );
   const [initialClassesIsDeleted, setInitialClassesIsDeleted] = useState(false);
-  // const [newRotationId, setNewRotationId] = useState<number | null>(null);
+  const [spawnLocations, setSpawnLocations] = useState<string[]>([]);
+  const [spawnMapChanges, setSpawnMapChanges] = useState(false);
 
   const successMutationHandler = (response: {
     message: string;
     rotationId: number;
   }) => {
-    // setNewRotationId(response.rotationId);
     router.push(`/rotation/${response.rotationId}`);
   };
 
@@ -38,12 +37,22 @@ export const useCreateRotation = (rotationData: FormClasses) => {
   });
   const [initialStates, setInitialStates] = useState<ClassInitialState[]>([]);
 
+  const getSpawnLocations = async (spawnMapId: number) => {
+    try {
+      const response = await getLocationsBasedOnWeeklyMap(spawnMapId);
+      setSpawnLocations(response);
+    } catch (err: any) {}
+  };
+
   useEffect(() => {
     if (rotationsExist) {
       form.reset(rotationData);
+      form.setValue('initialState.author', '');
+      form.setValue('initialState.version', '');
       setDefaultDataTouched(false);
       setInitialStates(rotationData.initialState.initialClasses);
       setData(rotationData);
+      getSpawnLocations(rotationData.weeklyMapId as number);
     }
   }, [rotationData, form, rotationsExist, router.query.rotationId]);
 
@@ -54,70 +63,44 @@ export const useCreateRotation = (rotationData: FormClasses) => {
     classId: number,
     isRotationCreatedFromScratch: boolean
   ) => {
-    if (isRotationCreatedFromScratch) {
-      setData({
-        ...form.getValues(),
-        waves: form.getValues()?.waves.map((wave) => ({
-          ...wave,
-          spawn1: {
-            ...wave.spawn1,
-            selectedOptions: wave.spawn1?.selectedOptions.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-          spawn2: {
-            ...wave.spawn2,
-            selectedOptions: wave.spawn2?.selectedOptions.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-          spawn3: {
-            ...wave.spawn3,
-            selectedOptions: wave.spawn3?.selectedOptions.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-        })),
-      });
-      setInitialClassesIsDeleted(!initialClassesIsDeleted);
-    } else {
-      setData(form.getValues());
-      setInitialClassesSelection(false);
-      setData({
-        ...form.getValues(),
-        waves: form.getValues()?.waves.map((wave) => ({
-          ...wave,
-          spawn1: {
-            ...wave.spawn1,
-            selectedOptions: wave.spawn1?.selectedOptions?.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-          spawn2: {
-            ...wave.spawn2,
-            selectedOptions: wave.spawn2?.selectedOptions?.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-          spawn3: {
-            ...wave.spawn3,
-            selectedOptions: wave.spawn3?.selectedOptions?.filter(
-              (spawnClass) => spawnClass.classId !== classId
-            ),
-          },
-        })),
-      });
-    }
+    isRotationCreatedFromScratch
+      ? setInitialClassesIsDeleted(!initialClassesIsDeleted)
+      : setInitialClassesSelection(false);
+    setData({
+      ...form.getValues(),
+      waves: form.getValues()?.waves.map((wave) => ({
+        ...wave,
+        spawn1: {
+          ...wave.spawn1,
+          selectedOptions: wave.spawn1?.selectedOptions?.filter(
+            (spawnClass) => spawnClass.classId !== classId
+          ),
+        },
+        spawn2: {
+          ...wave.spawn2,
+          selectedOptions: wave.spawn2?.selectedOptions?.filter(
+            (spawnClass) => spawnClass.classId !== classId
+          ),
+        },
+        spawn3: {
+          ...wave.spawn3,
+          selectedOptions: wave.spawn3?.selectedOptions?.filter(
+            (spawnClass) => spawnClass.classId !== classId
+          ),
+        },
+      })),
+    });
   };
-  console.log('sds', form.getValues());
 
   const { handleSubmit } = form;
+  console.log(form.formState.errors);
 
   const onSubmit = (data: FormClasses) => {
     try {
       setDataChanged(true);
       const formData = {
         initialState: data.initialState,
+        spawnMap: data.weeklyMap,
         waves: data.waves.map((wave) => ({
           ...wave,
           spawn1: {
@@ -179,5 +162,10 @@ export const useCreateRotation = (rotationData: FormClasses) => {
     initialClassesSelection,
     rotationsExist,
     initialClassesIsDeleted,
+    getSpawnLocations,
+    spawnLocations,
+    setSpawnMapChanges,
+    spawnMapChanges,
+    router,
   };
 };

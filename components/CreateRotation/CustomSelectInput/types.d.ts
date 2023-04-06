@@ -8,4 +8,5 @@ export type PropsTypes = {
   k?: number;
   isInitial: boolean;
   hydratedData?: FormClasses;
+  spawnMapChanges?: boolean | undefined;
 };

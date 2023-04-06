@@ -63,7 +63,7 @@ export const getMonthAndYear = (date: string) => {
   return `${month < 9 ? `0${month}` : month}.${year}`;
 };
 
-export const getClassColor = (color) => {
+export const getClassColor = (color: string) => {
   return `${
     color === 'red'
       ? 'bg-red2'
