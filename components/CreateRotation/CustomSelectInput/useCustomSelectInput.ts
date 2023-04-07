@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormClasses } from 'types/global';
+import { FormClasses, Wave } from 'types/global';
 
 export const useCustomSelectInput = (
   i: number,

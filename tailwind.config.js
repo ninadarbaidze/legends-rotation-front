@@ -4,6 +4,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       screens: {
@@ -39,6 +40,9 @@ module.exports = {
         red2: '#DC2626',
         green: '#15803D',
         black: '#27272A',
+        'dark-200': '#26292c',
+        'dark-100': '#37393f',
+        'light-100': '#d3d4d8',
       },
     },
   },

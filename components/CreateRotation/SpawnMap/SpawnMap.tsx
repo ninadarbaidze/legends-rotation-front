@@ -10,7 +10,7 @@ const SpawnMap: React.FC<Props> = (props) => {
     <div
       id={`${[spawnNum]}-${wave.id}`}
       className={`flex flex-col items-start w-[33%] ${
-        spawnNum !== 'spawn3' && 'border-r'
+        spawnNum !== 'spawn3' && 'border-r dark:border-zinc-600'
       }`}
     >
       <p className='text-xs'>{wave[spawnNum].spawnLocation}</p>

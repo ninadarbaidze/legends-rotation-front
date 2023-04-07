@@ -41,15 +41,9 @@ const ClassSelectInput: React.FC<Props> = (props) => {
             ? props.initialStates?.map((classes: ClassInitialState) => (
                 <>
                   <li
-                    className={`${
-                      classes.color === 'red'
-                        ? 'bg-red2'
-                        : classes.color === 'blue'
-                        ? 'bg-blue'
-                        : classes.color === 'green'
-                        ? 'bg-green'
-                        : 'bg-black'
-                    } relative w-8 h-8 rounded-full`}
+                    className={`${getClassColor(
+                      classes.color
+                    )} relative w-8 h-8 rounded-full`}
                     key={classes.classId}
                     onClick={() =>
                       deleteClassHandler(classes.classId as number)
@@ -57,7 +51,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                   >
                     {props.initialState && (
                       <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
-                        <p className='text-[7px]'> x </p>
+                        <p className='text-[7px] dark:text-black'> x </p>
                       </div>
                     )}
 
@@ -84,7 +78,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                     }
                   >
                     <div className='absolute right-0 flex items-center justify-center h-2 w-2 rounded-full bg-slate-200 cursor-pointer'>
-                      <p className='text-[7px]'> x </p>
+                      <p className='text-[7px] dark:text-black'> x </p>
                     </div>
                     <div className='p-[6px]'>
                       <Image

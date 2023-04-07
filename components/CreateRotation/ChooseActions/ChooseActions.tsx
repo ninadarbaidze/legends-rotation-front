@@ -37,6 +37,8 @@ const ChooseActions: React.FC<Props> = (props) => {
                 onChange={onChange}
                 isSearchable={true}
                 placeholder='Select actions...'
+                classNamePrefix='my-react-select'
+                className='my-react-select-container '
               />
             )}
           />

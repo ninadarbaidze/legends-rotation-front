@@ -29,6 +29,8 @@ const SpawnComponent: React.FC<Props> = (props) => {
                       )
                     : value
                 }
+                classNamePrefix='my-react-select'
+                className='my-react-select-container '
               />
             )}
           />

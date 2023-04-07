@@ -16,7 +16,7 @@ const NormalInput: React.FC<Props> = (props) => {
           typeof getErrorMessage(errors, props.inputName) === 'string'
             ? 'border-red2'
             : 'border-grey-300'
-        } py-[0.35rem] rounded-md border font-extralight pl-2`}
+        } py-[0.35rem] rounded-md border dark:bg-dark-200  font-extralight pl-2`}
         {...register(props.inputName, props.registerOptions)}
         placeholder={props.placeholder}
       />

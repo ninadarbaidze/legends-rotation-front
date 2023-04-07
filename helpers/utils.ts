@@ -71,6 +71,6 @@ export const getClassColor = (color: string) => {
       ? 'bg-blue'
       : color === 'green'
       ? 'bg-green'
-      : 'bg-black'
+      : 'bg-violet-700'
   }`;
 };
