@@ -33,7 +33,9 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
           onClick={() => setSelectMenuIsVisible(!selectMenuIsVisible)}
         >
           <p
-            className={`pl-2 w-36 ${hydratedSelectedOption && 'font-normal'}`}
+            className={`pl-2 w-36   ${
+              hydratedSelectedOption && 'font-normal dark:text-white'
+            }`}
           >{`${
             hydratedSelectedOption
               ? hydratedSelectedOption
@@ -45,12 +47,12 @@ const CustomSelectInput: React.FC<PropsTypes> = (props) => {
         </div>
         {selectMenuIsVisible && (
           <ul
-            className={`${props.inputClass} overflow-y-auto absolute bg-white w-56 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight z-30`}
+            className={`${props.inputClass} overflow-y-auto absolute bg-white dark:bg-dark-100 w-56 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight z-30`}
           >
             {props.options.map((option) => (
               <li
                 key={option}
-                className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
+                className='flex justify-between px-2 dark:text-white py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
                 onClick={() => selectOptionHandler(option)}
               >
                 <p>{option}</p>

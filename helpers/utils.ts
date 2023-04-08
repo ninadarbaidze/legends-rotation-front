@@ -56,11 +56,17 @@ export const getRotationDefaultData = (): FormClasses => {
   };
 };
 
-export const getMonthAndYear = (date: string) => {
-  const month = new Date(date).getMonth() + 1;
-  const year = new Date(date).getFullYear();
+export const formatDate = (rawDate: string | Date, excludeDays?: boolean) => {
+  const date = typeof rawDate === 'string' ? new Date(rawDate) : rawDate;
+  const day = date?.getDate().toString();
+  const month = date?.getMonth() + 1;
+  const year = date?.getFullYear();
 
-  return `${month < 9 ? `0${month}` : month}.${year}`;
+  return excludeDays
+    ? `${month?.toString().length === 1 ? `0${month}` : month}.${year}`
+    : `${day?.length === 1 ? `0${day}` : day}.${
+        month?.toString().length === 1 ? `0${month}` : month
+      }.${year}`;
 };
 
 export const getClassColor = (color: string) => {

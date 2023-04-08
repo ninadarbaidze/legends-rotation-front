@@ -25,3 +25,8 @@ export const getLocationsBasedOnWeeklyMap = async (weeklyMapId: number) => {
   const response = await axios.get(`/locations/${weeklyMapId}`);
   return response.data;
 };
+
+export const getAllWeeklyRotations = async () => {
+  const response = await axios.get(`/all-rotations`);
+  return response.data;
+};

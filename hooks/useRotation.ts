@@ -7,7 +7,7 @@ import { dummyData } from 'utils';
 
 export const useRotation = () => {
   const router = useRouter();
-  const [rotation, setRotation] = useState<FormClasses>(dummyData);
+  const [rotation, setRotation] = useState<FormClasses>();
 
   const { data } = useQueryHook(
     getRotationByRotationId,

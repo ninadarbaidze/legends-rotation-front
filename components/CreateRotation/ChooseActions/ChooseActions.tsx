@@ -10,6 +10,7 @@ const ChooseActions: React.FC<Props> = (props) => {
     props.i,
     props.k
   );
+
   return (
     <div className='mt-2'>
       <div

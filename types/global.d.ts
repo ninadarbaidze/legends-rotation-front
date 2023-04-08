@@ -11,6 +11,7 @@ export type ClassInitialState = {
 export type FormClasses = {
   id?: number | undefined;
   initialState: {
+    id?: number;
     author: string;
     initialClasses: ClassInitialState[];
     date: string;

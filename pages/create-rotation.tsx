@@ -52,7 +52,10 @@ export default function CreateRotation(props: {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <FormProvider {...form}>
-        <form className='dark:bg-dark-200' onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className='dark:bg-dark-200 overflow-x-clip'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className='flex flex-col gap-4 pb-2 px-2 2xl:px-24'>
             <div className='flex gap-2 justify-center items-center'>
               <h1 className='flex items-center justify-center font-teko text-4xl mt-4'>
@@ -82,7 +85,6 @@ export default function CreateRotation(props: {
                         onChange(e);
                         setSpawnMapChanges((prev) => !prev);
                       }}
-                      // styles={currentTheme === 'dark' && customStyles}
                       value={
                         value
                           ? props.spawnMaps
@@ -147,7 +149,7 @@ export default function CreateRotation(props: {
             <div>
               <div className='flex flex-col lg:flex-row lg:items-end gap-2'>
                 <div>
-                  <div className='flex items-end gap-1 lg:mt-4 mb-3 lg:mb-0'>
+                  <div className='flex items-end gap-1 mt-2 lg:mt-4 mb-3 lg:mb-0'>
                     <ClassSelectInput
                       initialState={true}
                       initialStates={initialStates}

@@ -41,9 +41,15 @@ const ClassSelectInput: React.FC<Props> = (props) => {
             ? props.initialStates?.map((classes: ClassInitialState) => (
                 <>
                   <li
-                    className={`${getClassColor(
-                      classes.color
-                    )} relative w-8 h-8 rounded-full`}
+                    className={`${
+                      classes.color === 'red'
+                        ? 'bg-red2'
+                        : classes.color === 'blue'
+                        ? 'bg-blue'
+                        : classes.color === 'green'
+                        ? 'bg-green'
+                        : 'bg-violet-700'
+                    } relative w-8 h-8 rounded-full`}
                     key={classes.classId}
                     onClick={() =>
                       deleteClassHandler(classes.classId as number)
@@ -108,13 +114,13 @@ const ClassSelectInput: React.FC<Props> = (props) => {
 
           {selectMenuIsVisible && (
             <ul
-              className={`${props.inputClass} overflow-y-auto absolute z-30 bg-white w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight`}
+              className={`${props.inputClass} overflow-y-auto absolute z-30 bg-whit dark:bg-dark-100  bg-white w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight`}
             >
               {props.initialState ? (
                 options?.map((option, i) => (
                   <li
                     key={option.classId! + i}
-                    className='flex justify-between px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
+                    className='flex justify-between px-2 py-2 w-full text-grey-700 dark:text-white cursor-pointer hover:bg-red hover:text-white'
                     onClick={() => selectOptionHandler(option)}
                   >
                     <p>{option.title}</p>
@@ -134,7 +140,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
                   ?.map((option: ClassInitialState) => (
                     <li
                       key={option.classId}
-                      className='flex justify-between items-center px-2 py-2 w-full text-grey-700 cursor-pointer hover:bg-red hover:text-white'
+                      className='flex justify-between items-center px-2 py-2 w-full text-grey-700 dark:text-white cursor-pointer hover:bg-red hover:text-white'
                       onClick={() => selectOptionHandler(option)}
                     >
                       <p>{option.title}</p>

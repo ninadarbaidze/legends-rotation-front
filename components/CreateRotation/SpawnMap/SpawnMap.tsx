@@ -9,24 +9,24 @@ const SpawnMap: React.FC<Props> = (props) => {
   return (
     <div
       id={`${[spawnNum]}-${wave.id}`}
-      className={`flex flex-col items-start w-[33%] ${
+      className={`flex flex-col sm:flex-row sm:items-center sm:gap-2  items-start w-[33%] sm:pb-2 ${
         spawnNum !== 'spawn3' && 'border-r dark:border-zinc-600'
       }`}
     >
-      <p className='text-xs'>{wave[spawnNum].spawnLocation}</p>
+      <p className='text-xs sm:text-sm'>{wave[spawnNum].spawnLocation}</p>
       <div
         className={`${
           wave[spawnNum].selectedOptions.length >= 3
             ? 'flex-col items-start'
             : 'flex items-center'
-        } gap-[1px] `}
+        } gap-[1px] sm:gap-2`}
       >
         <div className='flex items-start'>
           {wave[spawnNum].selectedOptions.map((selectedClasses) => (
             <div
               className={`${getClassColor(
                 selectedClasses.color
-              )} relative w-[15px] h-[15px] rounded-full`}
+              )} relative w-[15px] h-[15px] sm:w-6 sm:h-6 rounded-full`}
               key={selectedClasses.id}
             >
               <div className='p-[2px]'>
@@ -40,7 +40,7 @@ const SpawnMap: React.FC<Props> = (props) => {
             </div>
           ))}
         </div>
-        <p className='text-sm'>
+        <p className='text-sm sm:text-base'>
           {
             actionOptions.find(
               (item) => item.value === wave[spawnNum]?.actions[0]?.value
@@ -49,7 +49,7 @@ const SpawnMap: React.FC<Props> = (props) => {
         </p>
       </div>
       {spawnNum === 'spawn1' && (
-        <p className='text-[11px] text-zinc-500'>
+        <p className='text-[11px] sm:hidden text-zinc-500'>
           {
             objectiveOptions.find(
               (action) => action.value === wave.objective?.name

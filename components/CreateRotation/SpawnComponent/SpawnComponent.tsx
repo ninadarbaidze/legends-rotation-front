@@ -37,12 +37,12 @@ const SpawnComponent: React.FC<Props> = (props) => {
         </div>
       )}
 
-      <div className='flex flex-col lg:flex-row gap-1 border-2 rounded-lg shadow-md'>
+      <div className='flex flex-col lg:flex-row gap-1 border-2 dark:border-zinc-600 rounded-lg shadow-md'>
         {Array.from(Array(3).keys()).map((elem, i) => (
           <>
             <div
               key={elem + i}
-              className='flex flex-col gap-2 lg:w-1/3 2xl:gap-4 px-4 py-2 2xl:py-6 font-ubuntu border-b border-zinc-300 2xl:border-r 2xl:border-zinc-300'
+              className='flex flex-col gap-2 lg:w-1/3 2xl:gap-4 px-4 py-2 2xl:py-6 font-ubuntu border-b border-zinc-300 dark:border-zinc-600 2xl:border-r 2xl:border-zinc-300'
             >
               <h2 className='font-bold text-lg'>Spawn {i + 1}</h2>
               <div className='2xl:flex-col 2xl:items-center'>

@@ -1,9 +1,9 @@
-import { getClassColor, getMonthAndYear } from 'helpers';
+import { formatDate, getClassColor } from 'helpers';
 import { useRotation } from 'hooks';
 import Head from 'next/head';
 import React from 'react';
 import Image from 'next/image';
-import { SpawnMap, SwitchButton } from 'components';
+import { DesktopShowPage, SpawnMap, SwitchButton } from 'components';
 
 const Rotation = () => {
   const { rotation, router } = useRotation();
@@ -12,7 +12,7 @@ const Rotation = () => {
       <Head>
         <title>Rotation by {rotation?.initialState?.author}</title>
       </Head>
-      <div className='font-ubuntu p-[4px] pt-0 dark:bg-dark-200'>
+      <div className='font-ubuntu p-[4px] pt-0 dark:bg-dark-200 h-screen sm:hidden'>
         <header>
           <div className='flex justify-between items-center'>
             <h2 className='text-xl font-bold'>
@@ -58,7 +58,7 @@ const Rotation = () => {
             <p>{rotation?.initialState?.weeklyModifier}</p>
             <p>
               {rotation?.initialState?.date &&
-                getMonthAndYear(rotation?.initialState?.date as string)}
+                formatDate(rotation?.initialState?.date as string)}
             </p>
           </div>
         </header>
@@ -85,6 +85,9 @@ const Rotation = () => {
         >
           Edit rotation
         </button>
+      </div>
+      <div className='hidden sm:block w-full'>
+        <DesktopShowPage rotation={rotation} />
       </div>
     </>
   );

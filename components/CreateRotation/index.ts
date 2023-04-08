@@ -4,3 +4,4 @@ export * from './SpawnComponent';
 export * from './ChooseActions';
 export * from './ChooseExtra';
 export * from './SpawnMap';
+export * from './DesktopShowPage';
