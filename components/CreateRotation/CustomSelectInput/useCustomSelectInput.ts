@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { FormClasses, Wave } from 'types/global';
+import { FormClasses } from 'types/global';
 
 export const useCustomSelectInput = (
   i: number,
-  k: number,
+  k: '1' | '2' | '3',
   isInitial: boolean,
   hydratedData?: FormClasses,
   spawnMapChanges?: boolean
@@ -25,11 +25,13 @@ export const useCustomSelectInput = (
         });
   };
 
+  const SpawnN: 'spawn1' | 'spawn2' | 'spawn3' = `spawn${k}`;
+
   const hydratedSelectedOption =
     !!!selectedOption && hydratedData?.id
       ? isInitial
         ? hydratedData?.initialState?.weeklyModifier
-        : hydratedData?.waves[i][`spawn${k}`].spawnLocation
+        : hydratedData?.waves[i][SpawnN].spawnLocation
       : selectedOption;
 
   useEffect(() => {
