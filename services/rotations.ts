@@ -1,9 +1,10 @@
 import { axios } from 'services';
 import { FormClasses } from 'types/global';
 
-export const createRotation = async (data: FormClasses) => {
+export const createRotation = async (data: FormClasses, id: number) => {
+  console.log(id);
   const { data: response } = await axios.post(`/rotations`, data, {
-    params: { id: data?.id },
+    params: { id },
   });
   return response;
 };

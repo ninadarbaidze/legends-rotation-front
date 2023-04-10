@@ -1,5 +1,6 @@
+import { addClickAwayHandler } from 'helpers';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ClassInitialState, FormClasses, SetState } from 'types/global';
 
@@ -24,6 +25,9 @@ export const useClassSelectInput = (
   const [colors, setColors] = useState(['red', 'blue', 'green', 'black']);
   const { query } = useRouter();
   const rotationExists = !!query.rotationId;
+
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     if (initialState) {
@@ -145,6 +149,11 @@ export const useClassSelectInput = (
     }
   };
 
+  const openClassesHandler = () => {
+    setSelectMenuIsVisible(!selectMenuIsVisible);
+    addClickAwayHandler(triggerRef, dropdownRef, setSelectMenuIsVisible);
+  };
+
   return {
     selectMenuIsVisible,
     setSelectMenuIsVisible,
@@ -155,7 +164,8 @@ export const useClassSelectInput = (
     classes,
     getValues,
     setClasses,
-    // hydratedClasses,
-    // hydratedInitial,
+    openClassesHandler,
+    triggerRef,
+    dropdownRef,
   };
 };

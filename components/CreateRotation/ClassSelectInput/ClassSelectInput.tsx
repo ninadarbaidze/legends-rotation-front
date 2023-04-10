@@ -8,11 +8,13 @@ import { getClassColor } from 'helpers';
 const ClassSelectInput: React.FC<Props> = (props) => {
   const {
     selectMenuIsVisible,
-    setSelectMenuIsVisible,
     selectOptionHandler,
     options,
     deleteClassHandler,
     classes,
+    openClassesHandler,
+    triggerRef,
+    dropdownRef,
   } = useClassSelectInput(
     props.initialState,
     props.initialStates,
@@ -28,12 +30,12 @@ const ClassSelectInput: React.FC<Props> = (props) => {
 
   return (
     <>
-      {selectMenuIsVisible && (
+      {/* {selectMenuIsVisible && (
         <div
           className='absolute top-0 left-0 w-screen h-screen z-20 '
           onClick={() => setSelectMenuIsVisible(false)}
         />
-      )}
+      )} */}
       <div className=' flex flex-col justify-end items-start font-ubuntu h-16'>
         <p className=''>{props.labelName}</p>
         <ul className='flex gap-2 mb-1'>
@@ -104,7 +106,8 @@ const ClassSelectInput: React.FC<Props> = (props) => {
             className={`${props.inputClass} ${
               true ? 'text-grey-700' : 'text-grey-350'
             } relative  w-40 pr-18 py-[0.35rem] rounded-md border border-grey-300  font-extralight`}
-            onClick={() => setSelectMenuIsVisible(!selectMenuIsVisible)}
+            onClick={() => openClassesHandler()}
+            ref={triggerRef}
           >
             <p className='pl-2 text-grey-350 cursor-pointer'>Select classes</p>
             <div className=''>
@@ -115,6 +118,7 @@ const ClassSelectInput: React.FC<Props> = (props) => {
           {selectMenuIsVisible && (
             <ul
               className={`${props.inputClass} overflow-y-auto absolute z-30 bg-whit dark:bg-dark-100  bg-white w-40 py-2 rounded-md border border-grey-300 text-grey-350 font-extralight`}
+              ref={dropdownRef}
             >
               {props.initialState ? (
                 options?.map((option, i) => (

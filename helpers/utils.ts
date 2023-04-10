@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import { FieldErrors } from 'react-hook-form';
 import { FormClasses } from 'types/global';
 
@@ -79,4 +80,31 @@ export const getClassColor = (color: string) => {
       ? 'bg-green'
       : 'bg-violet-700'
   }`;
+};
+
+export const addClickAwayHandler = (
+  triggerRef: RefObject<any>,
+  dropdownRef: RefObject<any>,
+  setIsOpen: (isOpen: boolean) => void,
+  functionToExecuteAfterClose?: () => void,
+  extraRefToNotCloseOn?: RefObject<any>
+) => {
+  const clickAwayHandler = (e: MouseEvent) => {
+    if (
+      triggerRef.current?.contains(e.target) ||
+      extraRefToNotCloseOn?.current?.contains(e.target)
+    ) {
+      return;
+    }
+    if (dropdownRef.current && !dropdownRef?.current.contains(e.target)) {
+      if ((e.composedPath()[0] as HTMLDivElement).id === 'clear-all-button') {
+        (e.composedPath()[0] as HTMLDivElement).click &&
+          (e.composedPath()[0] as HTMLDivElement).click();
+      }
+      setIsOpen(false);
+      functionToExecuteAfterClose && functionToExecuteAfterClose();
+      document.removeEventListener('mousedown', clickAwayHandler);
+    }
+  };
+  document.addEventListener('mousedown', clickAwayHandler);
 };

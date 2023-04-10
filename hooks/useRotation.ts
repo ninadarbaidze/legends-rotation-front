@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getRotationByRotationId } from 'services';
 import { FormClasses } from 'types/global';
-import { dummyData } from 'utils';
+// import { dummyData } from 'utils';
 
 export const useRotation = () => {
   const router = useRouter();
@@ -16,7 +16,7 @@ export const useRotation = () => {
   );
 
   useEffect(() => {
-    setRotation(dummyData);
+    setRotation(data);
   }, [data]);
 
   return { rotation, router };

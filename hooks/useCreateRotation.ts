@@ -25,9 +25,9 @@ export const useCreateRotation = (rotationData: FormClasses) => {
   }) => {
     router.push(`/rotation/${response.rotationId}`);
   };
-
+  // console.log(rotationData?.id);
   const { mutate } = useMutateHook(
-    () => createRotation(form.getValues()),
+    () => createRotation(form.getValues(), rotationData?.id as number),
     'create-rotation',
     successMutationHandler
   );

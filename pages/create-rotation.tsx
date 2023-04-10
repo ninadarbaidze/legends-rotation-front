@@ -190,7 +190,7 @@ export default function CreateRotation(props: {
                         value: /^[0-9_.-]*$/,
                         message: 'use only numbers',
                       },
-                      required: true,
+                      required: false,
                     }}
                     inputName='initialState.version'
                     width='w-28'

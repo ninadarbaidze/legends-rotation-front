@@ -24,7 +24,7 @@ const DesktopShowPage: React.FC<Props> = (props) => {
                       <div
                         className={`${getClassColor(
                           selectedClasses.color
-                        )} relative w-7 h-7 rounded-full`}
+                        )} relative pl-[2px] w-7 h-7 rounded-full`}
                         key={selectedClasses.id}
                       >
                         <div className=''>

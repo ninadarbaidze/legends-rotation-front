@@ -28,9 +28,9 @@ const Rotations: React.FC<{
             <div className='col-span-1'>DATE</div>
             <div className='col-span-1'>CLASSES</div>
           </div>
-          <ul className='h-[90%] sm:full sm:h-full overflow-y-auto overflow-x-clip'>
+          <ul className='h-[80%] sm:full sm:h-full overflow-y-auto overflow-x-clip'>
             {props.rotations
-              ?.filter((item) => !item.initialState.isPublic)
+              ?.filter((item) => item.initialState.isPublic)
               ?.map((rotation) => (
                 <li
                   key={rotation.id}
