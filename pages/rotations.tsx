@@ -21,16 +21,16 @@ const Rotations: React.FC<{
         }}
       />
       <>
-        <div className='z-20 absolute w-full h-[90%] sm:w-[65%] sm:h-[75%] overflow-clip text-white sm:top-[20%] top-6 px-3 sm:px-0 sm:translate-x-[30%]'>
+        <div className='z-20 absolute w-full h-[90%] sm:w-[65%] sm:h-[75%] text-white sm:top-[20%] top-6 px-3 sm:px-0 sm:translate-x-[30%]'>
           <div className='grid grid-flow-row grid-cols-4 pb-4 mb-3 border-b sm:text-sm xs:text-xs'>
             <div className='col-span-1'>AUTHOR</div>
             <div className='col-span-1'>VERSION</div>
             <div className='col-span-1'>DATE</div>
             <div className='col-span-1'>CLASSES</div>
           </div>
-          <ul className='h-[80%] sm:full sm:h-full overflow-y-auto overflow-x-clip'>
+          <ul className='h-[90%] sm:full sm:h-[90%] overflow-y-auto overflow-x-clip'>
             {props.rotations
-              // ?.filter((item) => item.initialState.isPublic)
+              ?.filter((item) => !item.initialState.isPublic)
               ?.map((rotation) => (
                 <li
                   key={rotation.id}
