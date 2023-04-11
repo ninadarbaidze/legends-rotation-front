@@ -55,4 +55,5 @@ export type Wave = {
   objective?: {
     name: number;
   };
+  comment?: string;
 };

@@ -6,6 +6,7 @@ import router from 'next/router';
 import { SpawnMap } from '../SpawnMap';
 import { Props } from './types';
 import { objectiveOptions } from 'utils';
+import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid';
 
 const DesktopShowPage: React.FC<Props> = (props) => {
   return (
@@ -69,14 +70,20 @@ const DesktopShowPage: React.FC<Props> = (props) => {
               className='flex items-start gap-[3px] border-b dark:border-zinc-600 '
             >
               <div className='flex flex-col w-full'>
-                <div className='flex '>
-                  <p className='text-[11px] sm:text-base text-zinc-500'>
+                <div className='flex gap-1'>
+                  <p className='text-[11px] sm:text-sm text-zinc-500'>
                     {
                       objectiveOptions.find(
                         (action) => action.value === wave.objective?.name
                       )?.shortened
                     }
                   </p>
+                  <div className='items-center hidden sm:flex gap-[1px]'>
+                    <ChatBubbleBottomCenterTextIcon className='stroke-black text-white w-3' />
+                    <p className='text-[11px] sm:text-sm text-zinc-500 truncate'>
+                      {wave.comment}
+                    </p>
+                  </div>
                 </div>
                 <div className='flex'>
                   <h3

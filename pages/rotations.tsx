@@ -30,7 +30,7 @@ const Rotations: React.FC<{
           </div>
           <ul className='h-[80%] sm:full sm:h-full overflow-y-auto overflow-x-clip'>
             {props.rotations
-              ?.filter((item) => item.initialState.isPublic)
+              // ?.filter((item) => item.initialState.isPublic)
               ?.map((rotation) => (
                 <li
                   key={rotation.id}

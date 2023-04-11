@@ -5,6 +5,6 @@ export type Props = {
   inputName: string;
   className?: string;
   id: string;
-  label: string;
+  label?: string;
   width?: string;
 };

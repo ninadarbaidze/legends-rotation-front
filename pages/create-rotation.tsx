@@ -13,6 +13,7 @@ import { FormClasses } from 'types/global';
 import { GetServerSideProps } from 'next';
 import { getRotationByRotationId, getWeeklyMaps } from 'services';
 import Select from 'react-select';
+import { objectiveOptions } from 'utils';
 
 export default function CreateRotation(props: {
   data: FormClasses;
@@ -215,9 +216,51 @@ export default function CreateRotation(props: {
             >
               {Array.from(Array(16).keys())?.map((elem, i) => (
                 <li className='mt-4 flex flex-col' key={elem + i}>
-                  <h2 className='text-2xl font-ubuntu font-bold mb-1'>
-                    Waves {i}
-                  </h2>
+                  <div className='flex sm:flex-row flex-col gap-[2px]'>
+                    <h2 className='text-2xl font-ubuntu font-bold mb-1 pr-2'>
+                      Waves {i}
+                    </h2>
+                    <div className='flex gap-[1px]'>
+                      {(i === 2 ||
+                        i === 4 ||
+                        i === 7 ||
+                        i === 10 ||
+                        i === 13) && (
+                        <div className='flex flex-col gap-2 mb-1 justify-start items-start'>
+                          <Controller
+                            name={`waves[${i}].objective`}
+                            rules={{ required: false }}
+                            render={({ field: { onChange, value } }) => (
+                              <Select
+                                closeMenuOnSelect={true}
+                                key={value}
+                                options={objectiveOptions}
+                                isMulti={false}
+                                onChange={onChange}
+                                placeholder='Select objective . . .       '
+                                value={
+                                  value
+                                    ? objectiveOptions.find(
+                                        (action) => action.value === value.name
+                                      )
+                                    : value
+                                }
+                                classNamePrefix='my-react-select'
+                                className='my-react-select-container '
+                              />
+                            )}
+                          />
+                        </div>
+                      )}
+                      <NormalInput
+                        type={'text'}
+                        placeholder={'comment'}
+                        id={'comment'}
+                        inputName={`waves[${i}].comment`}
+                        className='w-36 mb-1'
+                      />
+                    </div>
+                  </div>
                   <div>
                     <SpawnComponent
                       initialStates={initialStates}

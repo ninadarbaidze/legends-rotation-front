@@ -36,22 +36,20 @@ export const getRotationDefaultData = (): FormClasses => {
           actions: [],
           checkbox: [],
           selectedOptions: [],
-          objective: '',
         },
         spawn2: {
           spawnLocation: '',
           actions: [],
           checkbox: [],
           selectedOptions: [],
-          objective: '',
         },
         spawn3: {
           spawnLocation: '',
           actions: [],
           checkbox: [],
           selectedOptions: [],
-          objective: '',
         },
+        comment: '',
       })),
     ],
   };
