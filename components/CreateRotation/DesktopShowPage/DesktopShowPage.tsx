@@ -78,12 +78,14 @@ const DesktopShowPage: React.FC<Props> = (props) => {
                       )?.shortened
                     }
                   </p>
-                  <div className='items-center hidden sm:flex gap-[1px]'>
-                    <ChatBubbleBottomCenterTextIcon className='stroke-black text-white w-3' />
-                    <p className='text-[11px] sm:text-sm text-zinc-500 truncate'>
-                      {wave.comment}
-                    </p>
-                  </div>
+                  {wave.comment && (
+                    <div className='items-center hidden sm:flex gap-[1px]'>
+                      <ChatBubbleBottomCenterTextIcon className='stroke-black text-white w-3' />
+                      <p className='text-[11px] sm:text-sm text-zinc-500 truncate'>
+                        {wave.comment}
+                      </p>
+                    </div>
+                  )}
                 </div>
                 <div className='flex'>
                   <h3
