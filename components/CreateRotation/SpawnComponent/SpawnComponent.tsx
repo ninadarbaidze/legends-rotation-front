@@ -1,10 +1,7 @@
-import Select from 'react-select';
 import { ClassSelectInput } from '../ClassSelectInput';
 import { CustomSelectInput } from '../CustomSelectInput';
-import { ChooseActions, NormalInput } from 'components';
+import { ChooseActions } from 'components';
 import { Props } from './types';
-import { Controller } from 'react-hook-form';
-import { objectiveOptions } from 'utils';
 
 const SpawnComponent: React.FC<Props> = (props) => {
   return (
@@ -56,13 +53,6 @@ const SpawnComponent: React.FC<Props> = (props) => {
             </>
           ))}
         </div>
-        {/* <NormalInput
-          type={'text'}
-          placeholder={'comment'}
-          id={'comment'}
-          inputName={`waves[${props.i}].comment`}
-          className='mb-1 ml-4 '
-        /> */}
       </div>
     </>
   );

@@ -74,7 +74,7 @@ const DesktopShowPage: React.FC<Props> = (props) => {
                   <p className='text-[11px] sm:text-sm text-zinc-500'>
                     {
                       objectiveOptions.find(
-                        (action) => action.value === wave.objective?.name
+                        (action) => action.value === wave.objective
                       )?.shortened
                     }
                   </p>

@@ -52,8 +52,10 @@ export type Wave = {
     selectedOptions: ClassInitialState[];
     actions: { value: number }[];
   };
-  objective?: {
-    name: number;
-  };
+  objective?:
+    | {
+        name: number;
+      }
+    | number;
   comment?: string;
 };

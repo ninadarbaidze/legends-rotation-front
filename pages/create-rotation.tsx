@@ -81,7 +81,6 @@ export default function CreateRotation(props: {
                       }))}
                       isMulti={false}
                       onChange={(e) => {
-                        console.log(typeof e?.value);
                         getSpawnLocations(e?.value as number);
                         onChange(e);
                         setSpawnMapChanges((prev) => !prev);
@@ -239,9 +238,9 @@ export default function CreateRotation(props: {
                                 onChange={onChange}
                                 placeholder='Select objective . . .       '
                                 value={
-                                  value
+                                  typeof value === 'number'
                                     ? objectiveOptions.find(
-                                        (action) => action.value === value.name
+                                        (action) => action.value === value
                                       )
                                     : value
                                 }

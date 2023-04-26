@@ -55,15 +55,17 @@ const SpawnMap: React.FC<Props> = (props) => {
             <p className='text-[11px] sm:hidden text-zinc-500 break-normal'>
               {
                 objectiveOptions.find(
-                  (action) => action.value === wave.objective?.name
+                  (action) => action.value === wave.objective
                 )?.shortened
               }
             </p>
           )}
 
           {wave.comment &&
-          ((!wave.objective?.name && spawnNum === 'spawn1') ||
-            (wave.objective?.name && spawnNum === 'spawn2')) ? (
+          (((!wave.objective as unknown as number) > 0 &&
+            spawnNum === 'spawn1') ||
+            ((wave.objective as unknown as number) > 0 &&
+              spawnNum === 'spawn2')) ? (
             <div className='flex items-center '>
               <ChatBubbleBottomCenterTextIcon className='stroke-black text-white w-3' />
               <p className='text-[11px] sm:hidden text-zinc-500 truncate'>
