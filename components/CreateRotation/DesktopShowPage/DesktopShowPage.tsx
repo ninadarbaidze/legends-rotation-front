@@ -10,7 +10,7 @@ import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid';
 
 const DesktopShowPage: React.FC<Props> = (props) => {
   return (
-    <div className='font-ubuntu sm:px-24 lg:px-[22rem] py-3 dark:bg-dark-200 h-full'>
+    <div className='font-ubuntu sm:px-24 lg:px-[22rem] py-3 dark:bg-dark-200 h-screen'>
       <header className='pb-6'>
         <div className='flex justify-between items-center'>
           <h2 className='text-xl font-bold'>
@@ -105,7 +105,7 @@ const DesktopShowPage: React.FC<Props> = (props) => {
       <button
         className='mt-8 text-sm rounded-md border border-zinc-400 px-2 py-1'
         onClick={() =>
-          router.push(`/create-rotation?rotationId=${props.rotation?.id}`)
+          router.push(`/create-rotation?rotationId=${props.token}`)
         }
       >
         Edit rotation

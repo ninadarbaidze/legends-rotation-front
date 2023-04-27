@@ -25,8 +25,13 @@ export const useCreateRotation = (rotationData: FormClasses) => {
   }) => {
     router.push(`/rotation/${response.rotationId}`);
   };
+
   const { mutate } = useMutateHook(
-    () => createRotation(form.getValues(), rotationData?.id as number),
+    () =>
+      createRotation(
+        form.getValues(),
+        router.query.rotationId as number | string
+      ),
     'create-rotation',
     successMutationHandler
   );
@@ -92,11 +97,11 @@ export const useCreateRotation = (rotationData: FormClasses) => {
   };
 
   const { handleSubmit } = form;
-  console.log(form.formState.errors);
 
   const onSubmit = (data: FormClasses) => {
     try {
       setDataChanged(true);
+
       const formData = {
         initialState: data.initialState,
         spawnMap: data.weeklyMap,
@@ -133,7 +138,7 @@ export const useCreateRotation = (rotationData: FormClasses) => {
 
       console.log('submitted data', formData);
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
     }
   };
 

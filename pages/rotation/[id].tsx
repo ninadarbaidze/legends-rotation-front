@@ -80,14 +80,17 @@ const Rotation = () => {
         <button
           className='mt-8 text-sm rounded-md border border-zinc-400 px-2 py-1'
           onClick={() =>
-            router.push(`/create-rotation?rotationId=${rotation?.id}`)
+            router.push(`/create-rotation?rotationId=${router.query.id}`)
           }
         >
           Edit rotation
         </button>
       </div>
       <div className='hidden sm:block w-full'>
-        <DesktopShowPage rotation={rotation} />
+        <DesktopShowPage
+          rotation={rotation}
+          token={router.query.id as string}
+        />
       </div>
     </>
   );

@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getRotationByRotationId } from 'services';
 import { FormClasses } from 'types/global';
-// import { dummyData } from 'utils';
 
 export const useRotation = () => {
   const router = useRouter();
@@ -12,11 +11,11 @@ export const useRotation = () => {
   const { data } = useQueryHook(
     getRotationByRotationId,
     'get-rotation-by-id',
-    +router?.query.id!
+    router?.query.id! as string
   );
 
   useEffect(() => {
-    setRotation(data);
+    data && setRotation(data);
   }, [data]);
 
   return { rotation, router };

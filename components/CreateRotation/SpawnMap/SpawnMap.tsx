@@ -15,13 +15,7 @@ const SpawnMap: React.FC<Props> = (props) => {
       }`}
     >
       <p className='text-xs sm:text-sm'>{wave[spawnNum].spawnLocation}</p>
-      <div
-        className={`${
-          wave[spawnNum].selectedOptions.length >= 3
-            ? 'flex-col items-start'
-            : 'flex items-center'
-        } gap-[1px] sm:gap-2`}
-      >
+      <div className={`flex items-center gap-[1px] sm:gap-2`}>
         <div className='flex items-start'>
           {wave[spawnNum].selectedOptions.map((selectedClasses) => (
             <div
@@ -52,7 +46,7 @@ const SpawnMap: React.FC<Props> = (props) => {
       {(spawnNum === 'spawn1' || spawnNum === 'spawn2') && (
         <div className='flex w-full items-end sm:hidden'>
           {spawnNum === 'spawn1' && (
-            <p className='text-[11px] sm:hidden text-zinc-500 break-normal'>
+            <p className='text-[11px] sm:hidden text-zinc-500 dark:text-zinc-400 break-normal'>
               {
                 objectiveOptions.find(
                   (action) => action.value === wave.objective
@@ -68,7 +62,7 @@ const SpawnMap: React.FC<Props> = (props) => {
               spawnNum === 'spawn2')) ? (
             <div className='flex items-center '>
               <ChatBubbleBottomCenterTextIcon className='stroke-black text-white w-3' />
-              <p className='text-[11px] sm:hidden text-zinc-500 truncate'>
+              <p className='text-[11px] sm:hidden dark:text-zinc-400 text-zinc-500 truncate'>
                 {wave.comment}
               </p>
             </div>
