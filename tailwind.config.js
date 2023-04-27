@@ -4,8 +4,17 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        xs: '350px',
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+      },
       backgroundImage: {
         main_bg: "url('/assets/images/main-wallpaper.jpg')",
       },
@@ -18,6 +27,22 @@ module.exports = {
       },
       fontFamily: {
         teko: ['Teko'],
+        ubuntu: ['Ubuntu'],
+      },
+      colors: {
+        'grey-250': '#E5E7EB',
+        'grey-300': '#D1D5DB',
+        'grey-350': '#6B7280',
+        'grey-700': '#374151',
+        'grey-900': '#111827',
+        red: '#CF0A0A',
+        blue: '#3B82F6',
+        red2: '#DC2626',
+        green: '#15803D',
+        black: '#27272A',
+        'dark-200': '#26292c',
+        'dark-100': '#37393f',
+        'light-100': '#d3d4d8',
       },
     },
   },
