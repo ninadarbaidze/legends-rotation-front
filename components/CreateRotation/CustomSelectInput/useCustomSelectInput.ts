@@ -31,7 +31,7 @@ export const useCustomSelectInput = (
     !!!selectedOption && hydratedData?.id
       ? isInitial
         ? hydratedData?.initialState?.weeklyModifier
-        : hydratedData?.waves[i][SpawnN].spawnLocation
+        : hydratedData?.waves[i]?.[SpawnN]?.spawnLocation
       : selectedOption;
 
   useEffect(() => {

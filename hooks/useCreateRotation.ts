@@ -101,12 +101,10 @@ export const useCreateRotation = (rotationData: FormClasses) => {
   const onSubmit = (data: FormClasses) => {
     try {
       setDataChanged(true);
-
       const formData = {
         initialState: data.initialState,
         spawnMap: data.weeklyMap,
         waves: data.waves.map((wave) => ({
-          ...wave,
           spawn1: {
             ...wave.spawn1,
             selectedOptions: wave.spawn1?.selectedOptions?.map(
@@ -135,8 +133,6 @@ export const useCreateRotation = (rotationData: FormClasses) => {
       };
 
       mutate(formData);
-
-      console.log('submitted data', formData);
     } catch (err: any) {
       console.error(err);
     }

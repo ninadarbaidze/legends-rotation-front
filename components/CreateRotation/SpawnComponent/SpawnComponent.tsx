@@ -23,7 +23,7 @@ const SpawnComponent: React.FC<Props> = (props) => {
                         options={props.spawnLocations}
                         inputClass={'w-40'}
                         i={props.i}
-                        k={`${i} + 1` as '1' | '2' | '3'}
+                        k={`${+i + 1}` as '1' | '2' | '3'}
                         isInitial={false}
                         hydratedData={props.hydratedData}
                         spawnMapChanges={props.spawnMapChanges}

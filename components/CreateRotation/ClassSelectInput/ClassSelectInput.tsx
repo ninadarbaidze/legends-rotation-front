@@ -30,12 +30,6 @@ const ClassSelectInput: React.FC<Props> = (props) => {
 
   return (
     <>
-      {/* {selectMenuIsVisible && (
-        <div
-          className='absolute top-0 left-0 w-screen h-screen z-20 '
-          onClick={() => setSelectMenuIsVisible(false)}
-        />
-      )} */}
       <div className=' flex flex-col justify-end items-start font-ubuntu h-16'>
         <p className=''>{props.labelName}</p>
         <ul className='flex gap-2 mb-1'>
